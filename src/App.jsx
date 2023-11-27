@@ -1,15 +1,13 @@
-// import Login from "./components/Login";
-import ButtonNavigasi from "./layout/ButtonNavigasi";
+import { Routes, Route } from "react-router-dom";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import User from "./pages/Users/Users";
 
 function App() {
   return (
-    <>
-      <ButtonNavigasi icon="dashboard" text="Dashboard" />
-      <br />
-      <ButtonNavigasi icon="user" text="User" />
-      <ButtonNavigasi icon="video" text="Video" />
-      <ButtonNavigasi icon="news" text="News" />
-    </>
+    <Routes>
+      <Route path="/" element={<Dashboard />} />
+      <Route path="/user" element={<User />} />
+    </Routes>
   );
 }
 
