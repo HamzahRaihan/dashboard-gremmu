@@ -2,40 +2,26 @@ import { useReducer } from "react";
 import PropTypes from "prop-types";
 import { FaHouseChimney, FaUserLarge, FaVideo, FaRegNewspaper } from "react-icons/fa6";
 
-const ButtonNavigasi = ({ property, className, icon, text }) => {
-  const [state, dispatch] = useReducer(reducer, {
-    property: property || "idle",
-  });
+const ButtonNavigasi = ({ property = "idle", className, icon, text }) => {
+  const [state, dispatch] = useReducer(reducer, { property });
 
   const getButtonStyles = () => {
-    if (state.property === "hovered") {
-      return " text-white hover:bg-[#3EBB5C]";
-    } else {
-      return "bg-[#C3EACC]";
-    }
+    return state.property === "hovered" ? "text-white hover:bg-[#3EBB5C]" : "bg-[#C3EACC]";
   };
 
   const getIconStyles = () => {
-    if (state.property === "hovered") {
-      return "text-white";
-    } else {
-      return "text-green-500";
-    }
+    return state.property === "hovered" ? "text-white" : "text-green-500";
   };
 
   return (
     <div
-      className={`w-[233px] flex items-center relative p-2 rounded-md cursor-pointer justify-between  ${getButtonStyles()} ${className}`}
-      onMouseLeave={() => {
-        dispatch({ type: "mouseLeave" });
-      }}
-      onMouseEnter={() => {
-        dispatch({ type: "mouseEnter" });
-      }}
+      className={`w-[200px] h-[45px] flex items-center p-5 rounded-md cursor-pointer justify-between mb-5 ${getButtonStyles()} ${className}`}
+      onMouseLeave={() => dispatch({ type: "mouseLeave" })}
+      onMouseEnter={() => dispatch({ type: "mouseEnter" })}
     >
-      <div className="w-[168px] flex items-center gap-[12px] h-[48px] rounded-[10px] ">
-        <div className={`flex-1 h-[24px] relative ${getIconStyles()} `}>{renderIcon(icon)}</div>
-        <span className={`relative w-fit text-[15px] font-medium text-center whitespace-nowrap leading-[22px] ${state.property === "hovered" ? "text-white" : "text-slate-700"}`}>{text}</span>
+      <div className="w-[168px] flex rounded-[10px] items-center">
+        <div className={getIconStyles()}>{renderIcon(icon)}</div>
+        <span className={`ml-2 ${state.property === "hovered" ? "text-white" : "text-slate-700"}`}>{text}</span>
       </div>
     </div>
   );

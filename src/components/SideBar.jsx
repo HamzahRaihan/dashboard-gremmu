@@ -2,8 +2,9 @@ import { useState } from "react";
 import Profile from "./Profile";
 import ButtonNavigasi from "../layout/ButtonNavigasi";
 import { FaAlignLeft } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
-const SideBar = () => {
+export const SideBar = ({ children }) => {
   const [isListVisible, setIsListVisible] = useState(false);
 
   const toggleListVisibility = () => {
@@ -41,30 +42,24 @@ const SideBar = () => {
         className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform ${isListVisible ? "translate-x-0" : "-translate-x-full"} bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700`}
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
-          <ul className="space-y-2 font-medium">
+        <div className="h-full px-6 pb-4 mt-8 overflow-y-auto bg-white dark:bg-gray-800">
+          <Link to="/">
             <ButtonNavigasi property="active" icon="dashboard" text="Dashboard" />
+          </Link>
+          <Link to="/user">
             <ButtonNavigasi icon="user" text="User" />
+          </Link>
+          <Link to="/video">
             <ButtonNavigasi icon="video" text="Video" />
+          </Link>
+          <Link to="/news">
             <ButtonNavigasi icon="news" text="News" />
-          </ul>
+          </Link>
         </div>
       </aside>
 
       <div className="p-4 sm:ml-64">
-        <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
-          <div className="grid grid-cols-3 gap-4 mb-4">
-            <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800"></div>
-          </div>
-          <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-            <p className="text-2xl text-gray-400 dark:text-gray-500">
-              <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                {/* <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/> */}
-              </svg>
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-4"></div>
-        </div>
+        <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">{children}</div>
       </div>
     </>
   );
