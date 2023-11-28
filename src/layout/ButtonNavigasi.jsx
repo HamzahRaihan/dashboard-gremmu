@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import { useReducer } from "react";
 import PropTypes from "prop-types";
 import { FaHouseChimney, FaUserLarge, FaVideo, FaRegNewspaper } from "react-icons/fa6";
 
@@ -74,7 +74,7 @@ function reducer(state, action) {
 }
 
 ButtonNavigasi.propTypes = {
-  property: PropTypes.oneOf(["idle", "hovered"]),
+  property: PropTypes.oneOf(["idle", "hovered", "active"]),
   className: PropTypes.string,
   icon: PropTypes.oneOf(["dashboard", "user", "video", "news"]).isRequired,
   text: PropTypes.string.isRequired,
