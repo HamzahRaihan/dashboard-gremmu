@@ -1,13 +1,8 @@
-import { Link } from "react-router-dom";
+import React from "react";
+import Profile from "./Profile";
 import ButtonNavigasi from "../layout/ButtonNavigasi";
-import { useState } from "react";
 
 const SideBar = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
   return (
     <>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -36,44 +31,12 @@ const SideBar = () => {
             </div>
 
             {/* profile */}
-            <div className="">
-              <div className="">
-                <button type="button" className="items-center text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded={isDropdownOpen} onClick={toggleDropdown}>
-                  <span className="sr-only">Open user menu</span>
-                  <img src="https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/Jese%20Leos.png?updatedAt=1697535830098" className="w-8 h-8 rounded-full" alt="user photo" />
-                </button>
-
-                {isDropdownOpen && (
-                  <div className="z-50 right-10 absolute mt-2 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600">
-                    <div className="px-4 py-3" role="none">
-                      <p className="text-sm text-gray-900 dark:text-white" role="none">
-                        Jese Leos
-                      </p>
-                      <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                        jeseleos@gmail.com
-                      </p>
-                    </div>
-                    <ul className="py-1" role="none">
-                      <li>
-                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                          Settings
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                          Keluar
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </div>
-            </div>
+            <Profile />
           </div>
         </div>
       </nav>
 
-      <aside id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
+      <aside id="logo-sidebar" className="fixed top-0 left-0 z-40 w-72 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
         <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
             <ButtonNavigasi property="active" icon="dashboard" text="Dashboard" />
