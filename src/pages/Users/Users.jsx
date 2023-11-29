@@ -8,7 +8,7 @@ const Users = () => {
       <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
         <div className="items-stretch self-stretch flex flex-col">
           <div className="items-stretch flex w-full justify-between gap-5 mt-2 px-5 max-md:max-w-full max-md:flex-wrap">
-            <div className="text-black text-3xl font-medium leading-10 grow shrink basis-auto">Users</div>
+            <div className="text-black text-3xl font-medium leading-10 grow shrink basis-auto">Manajemen Users</div>
           </div>
 
           <div className="items-stretch border border-[color:var(--neutral-700,#D1D9E2)] shadow-sm bg-slate-50 flex w-full flex-col mt-8 pb-3 rounded-xl border-solid max-md:max-w-full">
