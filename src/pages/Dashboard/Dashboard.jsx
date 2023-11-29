@@ -2,7 +2,29 @@ import { Link } from "react-router-dom";
 import { FaUserGroup, FaNewspaper, FaVideo, FaSignsPost, FaSistrix } from "react-icons/fa6";
 import { Checkbox, Table } from "flowbite-react";
 
+import { useEffect, useState } from "react";
+
 const Dashboard = () => {
+  const [userCount, setUserCount] = useState(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.API}${import.meta.env.USER_ENDPOINT}`);
+        if (response.ok) {
+          const userData = await response.json();
+          setUserCount(userData.length);
+        } else {
+          console.error("Failed to fetch user data");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array ensures that the effect runs only once after the component mounts
+
   return (
     <div className="p-4 sm:ml-64">
       <div className="p-4 border-2 border-green-200 border-dashed rounded-lg dark:border-green-700 mt-14">
@@ -20,7 +42,7 @@ const Dashboard = () => {
                 </div>
                 <div className="justify-center items-stretch flex grow basis-[0%] flex-col">
                   <div className="text-black text-opacity-50 text-sm font-medium leading-5 tracking-normal">Users</div>
-                  <div className="text-black text-2xl font-medium leading-5 tracking-normal mt-2">2</div>
+                  <div className="text-black text-2xl font-medium leading-5 tracking-normal mt-2">{userCount}</div>
                 </div>
               </div>
             </div>
