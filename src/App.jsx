@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import User from "./pages/Users/Users";
 import Video from "./pages/Video/Video";
 import News from "./pages/News/News";
+import Edit from "./pages/News/edit";
 
 function App() {
   return (
@@ -43,6 +44,15 @@ function App() {
           <>
             <SideBar />
             <News />
+          </>
+        }
+      />
+      <Route
+        path="/news/edit"
+        element={
+          <>
+            <SideBar />
+            <Edit />
           </>
         }
       />

@@ -1,3 +1,4 @@
+import { FaSistrix} from "react-icons/fa6";
 const Edit = () => {
   return (
     <div className="p-4 sm:ml-64">
