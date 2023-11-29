@@ -11,19 +11,26 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${import.meta.env.API}${import.meta.env.USER_ENDPOINT}`);
-        if (response.ok) {
-          const userData = await response.json();
-          setUserCount(userData.length);
-        } else {
-          console.error("Failed to fetch user data");
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch user data. Status: ${response.status}`);
         }
+
+        const contentType = response.headers.get("content-type");
+
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new Error("Invalid response format. Expected JSON.");
+        }
+
+        const userData = await response.json();
+        setUserCount(userData.length);
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching user data:", error.message);
       }
     };
 
     fetchData();
-  }, []); // Empty dependency array ensures that the effect runs only once after the component mounts
+  }, []);
 
   return (
     <div className="p-4 sm:ml-64">
