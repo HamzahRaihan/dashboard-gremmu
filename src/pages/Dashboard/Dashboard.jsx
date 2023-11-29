@@ -5,11 +5,13 @@ import { Checkbox, Table } from "flowbite-react";
 const Dashboard = () => {
   return (
     <div className="p-4 sm:ml-64">
-      <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+      <div className="p-4 border-2 border-green-200 border-dashed rounded-lg dark:border-green-700 mt-14">
         <div className="items-stretch self-stretch flex flex-col">
           <div className="items-stretch flex w-full justify-between gap-5 mt-2 px-5 max-md:max-w-full max-md:flex-wrap">
             <div className="text-black text-3xl font-medium leading-10 grow shrink basis-auto">Dashboard Admin</div>
           </div>
+
+          {/* card */}
           <div className="items-stretch flex w-full gap-5 mt-10 px-5 max-md:max-w-full max-md:flex-wrap max-md:justify-center">
             <div className="justify-end border border-[color:var(--neutral-700,#D1D9E2)] shadow-sm bg-slate-50 flex grow basis-[0%] flex-col px-5 py-4 rounded-xl border-solid items-end">
               <div className="items-stretch flex w-[213px] max-w-full justify-between gap-5">
@@ -56,6 +58,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+          {/* user report */}
           <div className="items-stretch border border-[color:var(--neutral-700,#D1D9E2)] shadow-sm bg-slate-50 flex w-full flex-col mt-8 pb-3 rounded-xl border-solid max-md:max-w-full">
             <div className="items-stretch border-b-[color:var(--neutral-700,#D1D9E2)] bg-slate-50 flex w-full flex-col px-5 py-4 border-b border-solid max-md:max-w-full">
               <div className="items-center flex w-full justify-between gap-5 max-md:max-w-full max-md:flex-wrap">
@@ -65,7 +68,7 @@ const Dashboard = () => {
                     <input
                       type="text"
                       id="search-dropdown"
-                      className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-green-50 rounded-lg border-2 border-green-300 focus:ring-2 focus:border-green-500 dark:bg-green-700 dark:border-green-600 dark:placeholder-green-400 dark:text-white dark:focus:border-green-500"
+                      className="block p-2.5 w-full z-20 text-sm text-green-900 bg-green-50 rounded-lg border-2 border-green-300 focus:ring-2 dark:bg-green-700 dark:border-green-600 dark:placeholder-green-400 dark:text-white  focus:ring-green-500 focus:border-green-500 dark:focus:ring-green-500 dark:focus:border-green-500"
                       placeholder="Search"
                       required
                     />
@@ -95,11 +98,11 @@ const Dashboard = () => {
                   </Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Row className="bg-white dark:border-green-700 dark:bg-green-800">
                     <Table.Cell className="p-4">
                       <Checkbox />
                     </Table.Cell>
-                    <Table.Cell className="flex items-center gap-6 whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                    <Table.Cell className="flex items-center gap-6 whitespace-nowrap font-medium text-green-900 dark:text-white">
                       <img src="https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/Jese%20Leos.png?updatedAt=1697535830098" className="w-8 h-8 rounded-full" alt="user photo" />
                       <h1>John Doe</h1>
                     </Table.Cell>
@@ -112,11 +115,11 @@ const Dashboard = () => {
                       </a>
                     </Table.Cell>
                   </Table.Row>
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Row className="bg-white dark:border-green-700 dark:bg-green-800">
                     <Table.Cell className="p-4">
                       <Checkbox />
                     </Table.Cell>
-                    <Table.Cell className="flex items-center gap-6 whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                    <Table.Cell className="flex items-center gap-6 whitespace-nowrap font-medium text-green-900 dark:text-white">
                       <img src="https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/Jese%20Leos.png?updatedAt=1697535830098" className="w-8 h-8 rounded-full" alt="user photo" />
                       <h1>John Doe</h1>
                     </Table.Cell>
@@ -129,11 +132,11 @@ const Dashboard = () => {
                       </a>
                     </Table.Cell>
                   </Table.Row>
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Row className="bg-white dark:border-green-700 dark:bg-green-800">
                     <Table.Cell className="p-4">
                       <Checkbox />
                     </Table.Cell>
-                    <Table.Cell className="flex items-center gap-6 whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                    <Table.Cell className="flex items-center gap-6 whitespace-nowrap font-medium text-green-900 dark:text-white">
                       <img src="https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/Jese%20Leos.png?updatedAt=1697535830098" className="w-8 h-8 rounded-full" alt="user photo" />
                       <h1>John Doe</h1>
                     </Table.Cell>
@@ -154,35 +157,35 @@ const Dashboard = () => {
             <nav className="mx-auto mt-9">
               <ul className="flex text-sm md:text-base">
                 <Link>
-                  <span className="flex items-center justify-center px-3 md:px-4 h-8 md:h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                  <span className="flex items-center justify-center px-3 md:px-4 h-8 md:h-10 ms-0 leading-tight text-green-500 bg-white border border-e-0 border-green-300 rounded-lg hover:bg-green-100 hover:text-green-700 dark:bg-green-800 dark:border-green-700 dark:text-green-400 dark:hover:bg-green-700 dark:hover:text-white">
                     Previous
                   </span>
                 </Link>
                 <Link>
-                  <span className="flex items-center justify-center px-3 md:px-4 h-8 md:h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                  <span className="flex items-center justify-center px-3 md:px-4 h-8 md:h-10 leading-tight text-green-500 bg-white border border-green-300 hover:bg-green-100 hover:text-green-700 dark:bg-green-800 dark:border-green-700 dark:text-green-400 dark:hover:bg-green-700 dark:hover:text-white">
                     1
                   </span>
                 </Link>
                 <Link>
-                  <span className="flex items-center justify-center px-3 md:px-4 h-8 md:h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                  <span className="flex items-center justify-center px-3 md:px-4 h-8 md:h-10 leading-tight text-green-500 bg-white border border-green-300 hover:bg-green-100 hover:text-green-700 dark:bg-green-800 dark:border-green-700 dark:text-green-400 dark:hover:bg-green-700 dark:hover:text-white">
                     2
                   </span>
                 </Link>
                 <Link>
                   <span
                     aria-current="page"
-                    className="flex items-center justify-center px-3 md:px-4 h-8 md:h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+                    className="flex items-center justify-center px-3 md:px-4 h-8 md:h-10 text-blue-600 border border-green-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-green-700 dark:bg-green-700 dark:text-white"
                   >
                     3
                   </span>
                 </Link>
                 <Link>
-                  <span className="flex items-center justify-center px-3 md:px-4 h-8 md:h-10 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                  <span className="flex items-center justify-center px-3 md:px-4 h-8 md:h-10 leading-tight text-green-500 bg-white border border-green-300 hover:bg-green-100 hover:text-green-700 dark:bg-green-800 dark:border-green-700 dark:text-green-400 dark:hover:bg-green-700 dark:hover:text-white">
                     4
                   </span>
                 </Link>
                 <Link>
-                  <span className="flex items-center justify-center px-3 md:px-4 h-8 md:h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                  <span className="flex items-center justify-center px-3 md:px-4 h-8 md:h-10 leading-tight text-green-500 bg-white border border-green-300 rounded-lg hover:bg-green-100 hover:text-green-700 dark:bg-green-800 dark:border-green-700 dark:text-green-400 dark:hover:bg-green-700 dark:hover:text-white">
                     Next
                   </span>
                 </Link>

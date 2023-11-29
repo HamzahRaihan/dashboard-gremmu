@@ -27,7 +27,7 @@ const News = () => {
                     <input
                       type="text"
                       id="search-dropdown"
-                      className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-green-50 rounded-lg border-2 border-green-300 focus:ring-2 focus:border-green-500 dark:bg-green-700 dark:border-green-600 dark:placeholder-green-400 dark:text-white dark:focus:border-green-500"
+                      className="block p-2.5 w-full z-20 text-sm text-green-900 bg-green-50 rounded-lg border-2 border-green-300 focus:ring-2 dark:bg-green-700 dark:border-green-600 dark:placeholder-green-400 dark:text-white  focus:ring-green-500 focus:border-green-500 dark:focus:ring-green-500 dark:focus:border-green-500"
                       placeholder="Search"
                       required
                     />
@@ -218,7 +218,6 @@ const News = () => {
                 </div>
                 <p className="font-semibold text-gray-700 dark:text-gray-400">Kepedulian dalam Membuang dan Mengelola Sampah: Tanggung Jawab Bersama Masyarakat dan Pemerintah</p>
               </Card>
-              
             </div>
 
             {/* pagination */}
