@@ -48,14 +48,14 @@ const SideBar = () => {
           <Link to="/user">
             <ButtonNavigasi icon="user" text="User" />
           </Link>
-          <Link to="/video">
-            <ButtonNavigasi icon="video" text="Video" />
+          <Link to="/petisi">
+            <ButtonNavigasi icon="petisi" text="Petisi" />
           </Link>
           <Link to="/news">
             <ButtonNavigasi icon="news" text="News" />
           </Link>
         </div>
-      </aside>      
+      </aside>
     </>
   );
 };

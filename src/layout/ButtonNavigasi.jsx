@@ -1,6 +1,6 @@
 import { useReducer } from "react";
 import PropTypes from "prop-types";
-import { FaHouseChimney, FaUserLarge, FaVideo, FaRegNewspaper } from "react-icons/fa6";
+import { FaHouseChimney, FaUserLarge, FaFileSignature, FaRegNewspaper } from "react-icons/fa6";
 
 const ButtonNavigasi = ({ property = "idle", className, icon, text }) => {
   const [state, dispatch] = useReducer(reducer, { property });
@@ -33,8 +33,8 @@ function renderIcon(icon) {
       return <FaHouseChimney />;
     case "user":
       return <FaUserLarge />;
-    case "video":
-      return <FaVideo />;
+    case "petisi":
+      return <FaFileSignature />;
     case "news":
       return <FaRegNewspaper />;
     default:
@@ -62,7 +62,7 @@ function reducer(state, action) {
 ButtonNavigasi.propTypes = {
   property: PropTypes.oneOf(["idle", "hovered", "active"]),
   className: PropTypes.string,
-  icon: PropTypes.oneOf(["dashboard", "user", "video", "news"]).isRequired,
+  icon: PropTypes.oneOf(["dashboard", "user", "petisi", "news"]).isRequired,
   text: PropTypes.string.isRequired,
 };
 

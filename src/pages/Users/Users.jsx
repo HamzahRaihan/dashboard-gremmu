@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaSistrix } from "react-icons/fa6";
+import { FaSistrix, FaSquarePen, FaRegTrashCan } from "react-icons/fa6";
 import { Checkbox, Table } from "flowbite-react";
 
 const Users = () => {
@@ -41,12 +41,12 @@ const Users = () => {
                   <Table.HeadCell className="p-4">
                     <Checkbox />
                   </Table.HeadCell>
-                  <Table.HeadCell>Username</Table.HeadCell>
-                  <Table.HeadCell>Bio</Table.HeadCell>
+                  <Table.HeadCell>Name</Table.HeadCell>
+                  <Table.HeadCell>Post</Table.HeadCell>
+                  <Table.HeadCell>Likes</Table.HeadCell>
+                  <Table.HeadCell>Comments</Table.HeadCell>
                   <Table.HeadCell>Date</Table.HeadCell>
-                  <Table.HeadCell>
-                    <span className="sr-only">Edit</span>
-                  </Table.HeadCell>
+                  <Table.HeadCell>Action</Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
                   <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -58,27 +58,14 @@ const Users = () => {
                       <h1>John Doe</h1>
                     </Table.Cell>
                     <Table.Cell>Seorang peminat kebersihan bumi yang penuh semangat, selalu sia..</Table.Cell>
-                    <Table.Cell>7 September 2023, 23:07</Table.Cell>
+                    <Table.Cell>100</Table.Cell>
+                    <Table.Cell>20</Table.Cell>
+                    <Table.Cell>20</Table.Cell>
                     <Table.Cell>
-                      <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                        Edit
-                      </a>
-                    </Table.Cell>
-                  </Table.Row>
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                    <Table.Cell className="p-4">
-                      <Checkbox />
-                    </Table.Cell>
-                    <Table.Cell className="flex items-center gap-6 whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                      <img src="https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/image%2012.png?updatedAt=1701235707834" className="w-8 h-8 rounded-full" alt="user photo" />
-                      <h1>F. Scott Fitzgerald</h1>
-                    </Table.Cell>
-                    <Table.Cell>Wahai admin tolonng jadikan aku admin</Table.Cell>
-                    <Table.Cell>1 September 2023, 10:07</Table.Cell>
-                    <Table.Cell>
-                      <a href="#" className="font-medium text-cyan-600 hover:underline dark:text-cyan-500">
-                        Edit
-                      </a>
+                      <div className="flex items-center gap-2">
+                        <FaSquarePen className="text-lg hover:scale-125 text-green-600 transition-transform duration-300 ease-in-out transform" />
+                        <FaRegTrashCan className="text-lg hover:scale-125 text-red-700 transition-transform duration-300 ease-in-out transform" />
+                      </div>
                     </Table.Cell>
                   </Table.Row>
                 </Table.Body>

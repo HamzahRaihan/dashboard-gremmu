@@ -4,7 +4,7 @@ import SideBar from "./components/SideBar";
 import AuthLogin from "./pages/Auth/AuthLogin";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import User from "./pages/Users/Users";
-import Video from "./pages/Video/Video";
+import Petisi from "./pages/Petisi/Petisi";
 import News from "./pages/News/News";
 import Edit from "./pages/News/edit";
 
@@ -30,11 +30,11 @@ function App() {
         }
       />
       <Route
-        path="/video"
+        path="/petisi"
         element={
           <>
             <SideBar />
-            <Video />
+            <Petisi />
           </>
         }
       />
