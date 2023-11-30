@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import ButtonPrimary from '../layout/ButtonPrimary';
 import { AuthContext } from '../context/AuthContext';
+import { Spinner } from 'flowbite-react';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -10,7 +11,7 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState('');
   const [checkboxError, setCheckboxError] = useState('');
 
-  const { handleLogin } = useContext(AuthContext);
+  const { loading, handleLogin } = useContext(AuthContext);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -98,7 +99,7 @@ const Login = () => {
 
           <div className="flex items-center w-full max-w-full gap-5 mt-2 self-end">
             <div className="text-stone-900 text-xs font-medium leading-5 underline flex-1 cursor-pointer">Forgot Password?</div>
-            <ButtonPrimary handleButtonClick={handleButtonClick}>Login</ButtonPrimary>
+            <ButtonPrimary handleButtonClick={handleButtonClick}>{loading ? <Spinner /> : 'Login'}</ButtonPrimary>
           </div>
         </form>
       </div>
