@@ -1,61 +1,55 @@
-import { useState } from "react";
-import ButtonPrimary from "../layout/ButtonPrimary";
+import { useContext, useState } from 'react';
+import ButtonPrimary from '../layout/ButtonPrimary';
+import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isChecked, setIsChecked] = useState(false);
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [checkboxError, setCheckboxError] = useState("");
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [checkboxError, setCheckboxError] = useState('');
+
+  const { handleLogin } = useContext(AuthContext);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-    setEmailError("");
+    setEmailError('');
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    setPasswordError("");
+    setPasswordError('');
   };
 
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
-    setCheckboxError("");
+    setCheckboxError('');
   };
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (e) => {
     // Validasi input
+    e.preventDefault();
     if (!email || !password) {
-      setEmailError("Email is required");
-      setPasswordError("Password is required");
+      setEmailError('Email is required');
+      setPasswordError('Password is required');
       return;
     }
 
     // Validasi email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setEmailError("Invalid email format");
+      setEmailError('Invalid email format');
       return;
     }
 
-    // Validasi checkbox
-    if (!isChecked) {
-      setCheckboxError("Please check the checkbox");
-      return;
-    }
+    // // Validasi checkbox
+    // if (!isChecked) {
+    //   setCheckboxError('Please check the checkbox');
+    //   return;
+    // }
 
-    // Simpan data email dan password di local storage
-    localStorage.setItem("userEmail", email);
-    localStorage.setItem("userPassword", password);
-
-    // Reset error state
-    setEmailError("");
-    setPasswordError("");
-    setCheckboxError("");
-
-    // Tampilkan pesan login berhasil
-    alert("Login successful!");
+    handleLogin(email, password);
   };
 
   return (
@@ -70,7 +64,9 @@ const Login = () => {
               value={email}
               onChange={handleEmailChange}
               placeholder="Input your email"
-              className={`text-gray-500 text-xs leading-5 tracking-normal shadow-sm bg-gray-200 px-5 py-3.5 rounded-xl w-full focus:ring-gray-500 focus:border-gray-500 dark:focus:ring-gray-500 dark:focus:border-gray-500 ${emailError ? "border border-red-500" : ""}`}
+              className={`text-gray-500 text-xs leading-5 tracking-normal shadow-sm bg-gray-200 px-5 py-3.5 rounded-xl w-full focus:ring-gray-500 focus:border-gray-500 dark:focus:ring-gray-500 dark:focus:border-gray-500 ${
+                emailError ? 'border border-red-500' : ''
+              }`}
             />
             {emailError && <p className="text-red-500 text-xs mt-1 absolute">{emailError}</p>}
           </div>
@@ -81,22 +77,28 @@ const Login = () => {
               value={password}
               onChange={handlePasswordChange}
               placeholder="Input your password"
-              className={`text-gray-500 text-xs leading-5 tracking-normal shadow-sm bg-gray-200 px-5 py-3.5 rounded-xl w-full focus:ring-gray-500 focus:border-gray-500 dark:focus:ring-gray-500 dark:focus:border-gray-500 ${passwordError ? "border border-red-500" : ""}`}
+              className={`text-gray-500 text-xs leading-5 tracking-normal shadow-sm bg-gray-200 px-5 py-3.5 rounded-xl w-full focus:ring-gray-500 focus:border-gray-500 dark:focus:ring-gray-500 dark:focus:border-gray-500 ${
+                passwordError ? 'border border-red-500' : ''
+              }`}
             />
             {passwordError && <p className="text-red-500 text-xs mt-1 absolute">{passwordError}</p>}
           </div>
           <div className="flex items-center font-bold leading-5 w-full max-w-full gap-2 mt-2 self-start">
             <label className="flex items-center space-x-2 cursor-pointer">
-              <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} className="h-4 w-4 border text-green-500 bg-white rounded-sm border-solid cursor-pointer focus:ring-gray-500 focus:border-gray-500 dark:focus:ring-gray-500 dark:focus:border-gray-500" />
+              <input
+                type="checkbox"
+                checked={isChecked}
+                onChange={handleCheckboxChange}
+                className="h-4 w-4 border text-green-500 bg-white rounded-sm border-solid cursor-pointer focus:ring-gray-500 focus:border-gray-500 dark:focus:ring-gray-500 dark:focus:border-gray-500"
+              />
             </label>
             <div className="text-stone-900 text-xs font-bold leading-5">Remember me</div>
             {checkboxError && <p className="text-red-500 text-xs mt-1">{checkboxError}</p>}
           </div>
-          
 
           <div className="flex items-center w-full max-w-full gap-5 mt-2 self-end">
             <div className="text-stone-900 text-xs font-medium leading-5 underline flex-1 cursor-pointer">Forgot Password?</div>
-            <ButtonPrimary onClick={handleButtonClick}>Login</ButtonPrimary>
+            <ButtonPrimary handleButtonClick={handleButtonClick}>Login</ButtonPrimary>
           </div>
         </form>
       </div>
