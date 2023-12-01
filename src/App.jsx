@@ -10,6 +10,7 @@ import Edit from './pages/News/edit';
 import { AuthContext } from './context/AuthContext';
 import { useContext } from 'react';
 import NotAdmin from './pages/NotAdmin';
+import NotFound from './pages/NotFound';
 
 function App() {
   const { userData } = useContext(AuthContext);
@@ -25,46 +26,63 @@ function App() {
               <Dashboard />
             </>
           ) : (
-            <Navigate to="/login" replace={true} />
+            <Navigate to="/forbidden" replace={true} />
           )
         }
       />
       <Route
         path="/user"
         element={
-          <>
-            <SideBar />
-            <User />
-          </>
+          userData?.role == 'admin' ? (
+            <>
+              <SideBar />
+              <User />
+            </>
+          ) : (
+            <Navigate to="/forbidden" replace={true} />
+          )
         }
       />
       <Route
         path="/video"
         element={
-          <>
-            <SideBar />
-            <Video />
-          </>
+          userData?.role == 'admin' ? (
+            <>
+              <SideBar />
+              <Video />
+            </>
+          ) : (
+            <Navigate to="/forbidden" replace={true} />
+          )
         }
       />
       <Route
         path="/news"
         element={
-          <>
-            <SideBar />
-            <News />
-          </>
+          userData?.role == 'admin' ? (
+            <>
+              <SideBar />
+              <News />
+            </>
+          ) : (
+            <Navigate to="/forbidden" replace={true} />
+          )
         }
       />
       <Route
         path="/news/edit"
         element={
-          <>
-            <SideBar />
-            <Edit />
-          </>
+          userData?.role == 'admin' ? (
+            <>
+              <SideBar />
+              <Edit />
+            </>
+          ) : (
+            <Navigate to="/forbidden" replace={true} />
+          )
         }
       />
+      <Route path="*" element={<NotFound />} />
       <Route path="/login" element={!userData ? <AuthLogin /> : <Navigate to="/" replace={true} />} />
       <Route path="/forbidden" element={userData?.role == 'user' ? <NotAdmin /> : <Navigate to="/login" replace={true} />} />
     </Routes>
