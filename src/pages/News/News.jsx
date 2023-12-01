@@ -1,10 +1,14 @@
-import { Link } from "react-router-dom";
-import { FaSistrix, FaEllipsis, FaDeleteLeft, FaPenToSquare } from "react-icons/fa6";
-import { Card } from "flowbite-react";
-import { useState } from "react";
+import { Link } from 'react-router-dom';
+import { FaSistrix, FaEllipsis, FaDeleteLeft, FaPenToSquare } from 'react-icons/fa6';
+import { Card } from 'flowbite-react';
+import { useContext, useState } from 'react';
+import { NewsContext } from '../../context/NewsContext';
 
 const News = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const { newsData } = useContext(NewsContext);
+  console.log('🚀 ~ file: News.jsx:11 ~ News ~ newsData:', newsData);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
