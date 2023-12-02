@@ -11,6 +11,7 @@ import { AuthContext } from './context/AuthContext';
 import { useContext } from 'react';
 import NotAdmin from './pages/NotAdmin';
 import NotFound from './pages/NotFound';
+import Add from './pages/News/add';
 
 function App() {
   const { userData } = useContext(AuthContext);
@@ -70,12 +71,25 @@ function App() {
         }
       />
       <Route
-        path="/news/edit"
+        path="/news/edit/:id"
         element={
           userData?.role == 'admin' ? (
             <>
               <SideBar />
               <Edit />
+            </>
+          ) : (
+            <Navigate to="/forbidden" replace={true} />
+          )
+        }
+      />
+      <Route
+        path="/news/add-news"
+        element={
+          userData?.role == 'admin' ? (
+            <>
+              <SideBar />
+              <Add />
             </>
           ) : (
             <Navigate to="/forbidden" replace={true} />
