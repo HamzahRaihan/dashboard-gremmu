@@ -12,6 +12,7 @@ import { useContext } from 'react';
 import NotAdmin from './pages/NotAdmin';
 import NotFound from './pages/NotFound';
 import Add from './pages/News/add';
+import { NewsContextProvider } from './context/NewsContext';
 
 function App() {
   const { userData } = useContext(AuthContext);
@@ -61,10 +62,10 @@ function App() {
         path="/news"
         element={
           userData?.role == 'admin' ? (
-            <>
+            <NewsContextProvider>
               <SideBar />
               <News />
-            </>
+            </NewsContextProvider>
           ) : (
             <Navigate to="/forbidden" replace={true} />
           )
@@ -74,10 +75,10 @@ function App() {
         path="/news/edit/:id"
         element={
           userData?.role == 'admin' ? (
-            <>
+            <NewsContextProvider>
               <SideBar />
               <Edit />
-            </>
+            </NewsContextProvider>
           ) : (
             <Navigate to="/forbidden" replace={true} />
           )
