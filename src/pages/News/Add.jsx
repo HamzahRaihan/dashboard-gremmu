@@ -1,17 +1,19 @@
 import { useContext, useState } from 'react';
 import { NewsContext } from '../../context/NewsContext';
 import CloudinaryUploadWidget from '../../components/CloudinaryUploadWidget';
+import { Spinner } from 'flowbite-react';
 
 const Add = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [catId, setCatId] = useState('');
+  const [categoryId, setCategoryId] = useState(1);
+  console.log('🚀 ~ file: add.jsx:10 ~ Add ~ categoryId:', categoryId);
 
-  const { handleAddNews, categories } = useContext(NewsContext);
+  const { handleAddNews, categories, loading } = useContext(NewsContext);
 
   const handleSubmitNews = (e) => {
     e.preventDefault();
-    handleAddNews(title, description, fileUrl, catId);
+    handleAddNews(title, description, fileUrl, categoryId);
   };
 
   const [fileUrl, setFileUrl] = useState('');
@@ -53,8 +55,8 @@ const Add = () => {
           <div className="items-stretch self-stretch flex flex-col">
             <div className="flex gap-5 mt-2 px-5 max-md:max-w-full max-md:flex-wrap">
               <div className="text-black text-3xl font-medium  shrink basis-auto">News</div>
-              <button className="bg-green-500 rounded-lg text-white active:ring ring-offset-1 p-2" color="success">
-                Simpan
+              <button className="bg-green-500 rounded-lg text-white active:ring ring-offset-1 p-2" color="success" disabled={loading}>
+                {loading ? <Spinner /> : 'Simpan'}
               </button>
             </div>
           </div>
@@ -84,7 +86,7 @@ const Add = () => {
               ></textarea>
             </div>
 
-            <select className="rounded-lg w-full mt-5" value={catId} onChange={(e) => setCatId(e.target.value)}>
+            <select className="rounded-lg w-full mt-5" value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
               {categories.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.category}
