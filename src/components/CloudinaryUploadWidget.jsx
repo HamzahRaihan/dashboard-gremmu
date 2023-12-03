@@ -53,7 +53,7 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId, setFileUrl, fileUrl }) 
 
   return (
     <CloudinaryScriptContext.Provider value={{ loaded }}>
-      <button id="upload_widget" onClick={initializeCloudinaryWidget}>
+      <div id="upload_widget" onClick={initializeCloudinaryWidget}>
         <Label
           htmlFor="dropzone-file"
           className="dark:hover:bg-bray-800 flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
@@ -71,7 +71,7 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId, setFileUrl, fileUrl }) 
           )}
           {/* <FileInput id="dropzone-file" className="hidden" /> */}
         </Label>
-      </button>
+      </div>
     </CloudinaryScriptContext.Provider>
   );
 }
