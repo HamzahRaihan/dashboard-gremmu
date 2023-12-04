@@ -3,15 +3,21 @@ import { FaSistrix, FaEllipsis, FaDeleteLeft, FaPenToSquare } from 'react-icons/
 import { Card } from 'flowbite-react';
 import { useContext, useState } from 'react';
 import { NewsContext } from '../../context/NewsContext';
+import { IoIosAddCircle } from 'react-icons/io';
+import { formatDate } from '../../utils/Utils';
 
 const News = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
   const { newsData } = useContext(NewsContext);
   console.log('🚀 ~ file: News.jsx:11 ~ News ~ newsData:', newsData);
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(new Array(newsData.length).fill(false));
+
+  const toggleDropdown = (index) => {
+    setIsDropdownOpen((prev) => {
+      const newState = [...prev];
+      newState[index] = !newState[index];
+      return newState;
+    });
   };
 
   return (
@@ -19,13 +25,19 @@ const News = () => {
       <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
         <div className="items-stretch self-stretch flex flex-col">
           <div className="items-stretch flex w-full justify-between gap-5 mt-2 px-5 max-md:max-w-full max-md:flex-wrap">
-            <div className="text-black text-3xl font-medium leading-10 grow shrink basis-auto">News</div>
+            <div className="flex items-center gap-3">
+              <div className="text-black text-3xl font-medium leading-10 grow shrink basis-auto">News</div>
+              <Link to="/news/add-news">
+                <IoIosAddCircle size={30} />
+              </Link>
+            </div>
           </div>
 
           <div className="items-stretch border border-[color:var(--neutral-700,#D1D9E2)] shadow-sm bg-slate-50 flex w-full flex-col mt-8 pb-3 rounded-xl border-solid max-md:max-w-full">
             <div className="items-stretch border-b-[color:var(--neutral-700,#D1D9E2)] bg-slate-50 flex w-full flex-col px-5 py-4 border-b border-solid max-md:max-w-full">
               <div className="items-center flex w-full justify-between gap-5 max-md:max-w-full max-md:flex-wrap">
-                <div className="text-black text-base font-medium leading-5 tracking-normal my-auto">News</div>
+                <h1 className="text-black text-base font-medium leading-5 tracking-normal my-auto">News</h1>
+
                 <div className="items-center bg-white self-stretch flex justify-between gap-5 pl-3">
                   <div className="relative w-full">
                     <input
@@ -46,182 +58,43 @@ const News = () => {
               </div>
             </div>
             {/* card */}
-            <div className="flex flex-wrap justify-start gap-4 p-5">
-              <Card className="max-w-[350px]" imgAlt="Kepedulian dalam Membuang dan Mengelola Sampah" imgSrc="https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/photo%20Fill.png?updatedAt=1701236602366">
-                <div className="relative">
-                  <div className="flex justify-between text-sm font-bold text-gray-900 dark:text-white">
-                    <span>Kamis, 7 September 2023</span>
-                    <button type="button" label="edit" className="text-sm rounded-full dark:focus:ring-gray-600" aria-expanded={isDropdownOpen} onClick={toggleDropdown}>
-                      <FaEllipsis />
-                    </button>
-                    {isDropdownOpen && (
-                      <div className="absolute right-0 mt-5 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600">
-                        <ul className="py-1" role="none">
-                          <Link to="/news/edit" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                            <FaPenToSquare />
-                            <span>Edit</span>
-                          </Link>
-                          <Link to="/news/delete" className="flex items-center gap-2 px-4 py-2 text-sm text-red-800 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                            <FaDeleteLeft />
-                            <span>Hapus</span>
-                          </Link>
-                        </ul>
-                      </div>
-                    )}
+            <div className="flex flex-wrap-reverse justify-start gap-4 p-5">
+              {newsData.map((item, index) => (
+                <Card
+                  className="max-w-[350px] object-cover"
+                  renderImage={() => (
+                    <img src={`${item.image ? item.image : 'https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/photo%20Fill.png?updatedAt=1701236602366'}`} alt="image 1" className="h-52 w-96 object-cover " />
+                  )}
+                  key={item.id}
+                >
+                  <div className="relative">
+                    <div className="flex justify-between text-sm font-bold text-gray-900 dark:text-white">
+                      <span>{formatDate(item.createdAt)}</span>
+                      <button type="button" label="edit" className="text-sm rounded-full dark:focus:ring-gray-600" aria-expanded={isDropdownOpen[index]} onClick={() => toggleDropdown(index)}>
+                        <FaEllipsis />
+                      </button>
+                      {isDropdownOpen[index] && (
+                        <div className="absolute right-0 mt-5 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600">
+                          <ul className="py-1" role="none">
+                            <Link to={`/news/edit/${item.id}`} className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                              <FaPenToSquare />
+                              <span>Edit</span>
+                            </Link>
+                            <Link to="/news/delete" className="flex items-center gap-2 px-4 py-2 text-sm text-red-800 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                              <FaDeleteLeft />
+                              <span>Hapus</span>
+                            </Link>
+                          </ul>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-                <p className="font-semibold text-gray-700 dark:text-gray-400">Kepedulian dalam Membuang dan Mengelola Sampah: Tanggung Jawab Bersama Masyarakat dan Pemerintah</p>
-              </Card>
-              <Card className="max-w-[350px]" imgAlt="Kepedulian dalam Membuang dan Mengelola Sampah" imgSrc="https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/photo%20Fill.png?updatedAt=1701236602366">
-                <div className="relative">
-                  <div className="flex justify-between text-sm font-bold text-gray-900 dark:text-white">
-                    <span>Kamis, 7 September 2023</span>
-                    <button type="button" label="edit" className="text-sm rounded-full dark:focus:ring-gray-600" aria-expanded={isDropdownOpen} onClick={toggleDropdown}>
-                      <FaEllipsis />
-                    </button>
-                    {isDropdownOpen && (
-                      <div className="absolute right-0 mt-5 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600">
-                        <ul className="py-1" role="none">
-                          <Link to="/news/edit" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                            <FaPenToSquare />
-                            <span>Edit</span>
-                          </Link>
-                          <Link to="/news/delete" className="flex items-center gap-2 px-4 py-2 text-sm text-red-800 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                            <FaDeleteLeft />
-                            <span>Hapus</span>
-                          </Link>
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <p className="font-semibold text-gray-700 dark:text-gray-400">Kepedulian dalam Membuang dan Mengelola Sampah: Tanggung Jawab Bersama Masyarakat dan Pemerintah</p>
-              </Card>
-              <Card className="max-w-[350px]" imgAlt="Kepedulian dalam Membuang dan Mengelola Sampah" imgSrc="https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/photo%20Fill.png?updatedAt=1701236602366">
-                <div className="relative">
-                  <div className="flex justify-between text-sm font-bold text-gray-900 dark:text-white">
-                    <span>Kamis, 7 September 2023</span>
-                    <button type="button" label="edit" className="text-sm rounded-full dark:focus:ring-gray-600" aria-expanded={isDropdownOpen} onClick={toggleDropdown}>
-                      <FaEllipsis />
-                    </button>
-                    {isDropdownOpen && (
-                      <div className="absolute right-0 mt-5 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600">
-                        <ul className="py-1" role="none">
-                          <Link to="/news/edit" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                            <FaPenToSquare />
-                            <span>Edit</span>
-                          </Link>
-                          <Link to="/news/delete" className="flex items-center gap-2 px-4 py-2 text-sm text-red-800 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                            <FaDeleteLeft />
-                            <span>Hapus</span>
-                          </Link>
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <p className="font-semibold text-gray-700 dark:text-gray-400">Kepedulian dalam Membuang dan Mengelola Sampah: Tanggung Jawab Bersama Masyarakat dan Pemerintah</p>
-              </Card>
-              <Card className="max-w-[350px]" imgAlt="Kepedulian dalam Membuang dan Mengelola Sampah" imgSrc="https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/photo%20Fill.png?updatedAt=1701236602366">
-                <div className="relative">
-                  <div className="flex justify-between text-sm font-bold text-gray-900 dark:text-white">
-                    <span>Kamis, 7 September 2023</span>
-                    <button type="button" label="edit" className="text-sm rounded-full dark:focus:ring-gray-600" aria-expanded={isDropdownOpen} onClick={toggleDropdown}>
-                      <FaEllipsis />
-                    </button>
-                    {isDropdownOpen && (
-                      <div className="absolute right-0 mt-5 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600">
-                        <ul className="py-1" role="none">
-                          <Link to="/news/edit" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                            <FaPenToSquare />
-                            <span>Edit</span>
-                          </Link>
-                          <Link to="/news/delete" className="flex items-center gap-2 px-4 py-2 text-sm text-red-800 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                            <FaDeleteLeft />
-                            <span>Hapus</span>
-                          </Link>
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <p className="font-semibold text-gray-700 dark:text-gray-400">Kepedulian dalam Membuang dan Mengelola Sampah: Tanggung Jawab Bersama Masyarakat dan Pemerintah</p>
-              </Card>
-              <Card className="max-w-[350px]" imgAlt="Kepedulian dalam Membuang dan Mengelola Sampah" imgSrc="https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/photo%20Fill.png?updatedAt=1701236602366">
-                <div className="relative">
-                  <div className="flex justify-between text-sm font-bold text-gray-900 dark:text-white">
-                    <span>Kamis, 7 September 2023</span>
-                    <button type="button" label="edit" className="text-sm rounded-full dark:focus:ring-gray-600" aria-expanded={isDropdownOpen} onClick={toggleDropdown}>
-                      <FaEllipsis />
-                    </button>
-                    {isDropdownOpen && (
-                      <div className="absolute right-0 mt-5 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600">
-                        <ul className="py-1" role="none">
-                          <Link to="/news/edit" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                            <FaPenToSquare />
-                            <span>Edit</span>
-                          </Link>
-                          <Link to="/news/delete" className="flex items-center gap-2 px-4 py-2 text-sm text-red-800 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                            <FaDeleteLeft />
-                            <span>Hapus</span>
-                          </Link>
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <p className="font-semibold text-gray-700 dark:text-gray-400">Kepedulian dalam Membuang dan Mengelola Sampah: Tanggung Jawab Bersama Masyarakat dan Pemerintah</p>
-              </Card>
-              <Card className="max-w-[350px]" imgAlt="Kepedulian dalam Membuang dan Mengelola Sampah" imgSrc="https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/photo%20Fill.png?updatedAt=1701236602366">
-                <div className="relative">
-                  <div className="flex justify-between text-sm font-bold text-gray-900 dark:text-white">
-                    <span>Kamis, 7 September 2023</span>
-                    <button type="button" label="edit" className="text-sm rounded-full dark:focus:ring-gray-600" aria-expanded={isDropdownOpen} onClick={toggleDropdown}>
-                      <FaEllipsis />
-                    </button>
-                    {isDropdownOpen && (
-                      <div className="absolute right-0 mt-5 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600">
-                        <ul className="py-1" role="none">
-                          <Link to="/news/edit" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                            <FaPenToSquare />
-                            <span>Edit</span>
-                          </Link>
-                          <Link to="/news/delete" className="flex items-center gap-2 px-4 py-2 text-sm text-red-800 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                            <FaDeleteLeft />
-                            <span>Hapus</span>
-                          </Link>
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <p className="font-semibold text-gray-700 dark:text-gray-400">Kepedulian dalam Membuang dan Mengelola Sampah: Tanggung Jawab Bersama Masyarakat dan Pemerintah</p>
-              </Card>
-              <Card className="max-w-[350px]" imgAlt="Kepedulian dalam Membuang dan Mengelola Sampah" imgSrc="https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/photo%20Fill.png?updatedAt=1701236602366">
-                <div className="relative">
-                  <div className="flex justify-between text-sm font-bold text-gray-900 dark:text-white">
-                    <span>Kamis, 7 September 2023</span>
-                    <button type="button" label="edit" className="text-sm rounded-full dark:focus:ring-gray-600" aria-expanded={isDropdownOpen} onClick={toggleDropdown}>
-                      <FaEllipsis />
-                    </button>
-                    {isDropdownOpen && (
-                      <div className="absolute right-0 mt-5 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600">
-                        <ul className="py-1" role="none">
-                          <Link to="/news/edit" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                            <FaPenToSquare />
-                            <span>Edit</span>
-                          </Link>
-                          <Link to="/news/delete" className="flex items-center gap-2 px-4 py-2 text-sm text-red-800 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                            <FaDeleteLeft />
-                            <span>Hapus</span>
-                          </Link>
-                        </ul>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <p className="font-semibold text-gray-700 dark:text-gray-400">Kepedulian dalam Membuang dan Mengelola Sampah: Tanggung Jawab Bersama Masyarakat dan Pemerintah</p>
-              </Card>
+                  <p className="font-semibold text-gray-700 dark:text-gray-400">{item.title}</p>
+                  <p className="font-thin text-sm text-gray-700 dark:text-gray-400">
+                    Author: {item.User.firstName} {item.User.lastName}
+                  </p>
+                </Card>
+              ))}
             </div>
 
             {/* pagination */}

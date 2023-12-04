@@ -1,30 +1,22 @@
-import { Spinner } from 'flowbite-react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { NewsContext } from '../../context/NewsContext';
 import CloudinaryUploadWidget from '../../components/CloudinaryUploadWidget';
+import { Spinner } from 'flowbite-react';
 
-const Edit = () => {
+const Add = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [categoryId, setCategoryId] = useState('');
-  const [fileUrl, setFileUrl] = useState('');
+  const [categoryId, setCategoryId] = useState(1);
+  console.log('🚀 ~ file: add.jsx:10 ~ Add ~ categoryId:', categoryId);
 
-  const { newsById, loading, handleEditNews, categories } = useContext(NewsContext);
+  const { handleAddNews, categories, loading } = useContext(NewsContext);
 
-  useEffect(() => {
-    // Check if newsById is available before setting the title
-    if (newsById?.title || newsById?.description || newsById?.image || newsById?.categoryId) {
-      setTitle(newsById.title);
-      setDescription(newsById.description);
-      setFileUrl(newsById.image);
-      setCategoryId(newsById.categoryId);
-    }
-  }, [newsById]);
-
-  const handleClickEditNews = (e) => {
+  const handleSubmitNews = (e) => {
     e.preventDefault();
-    handleEditNews(title, description, fileUrl, categoryId);
+    handleAddNews(title, description, fileUrl, categoryId);
   };
+
+  const [fileUrl, setFileUrl] = useState('');
 
   const [publicId, setPublicId] = useState();
   // Replace with your own cloud name
@@ -59,7 +51,7 @@ const Edit = () => {
   return (
     <div className="p-4 sm:ml-64">
       <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
-        <form onSubmit={handleClickEditNews}>
+        <form onSubmit={handleSubmitNews}>
           <div className="items-stretch self-stretch flex flex-col">
             <div className="flex gap-5 mt-2 px-5 max-md:max-w-full max-md:flex-wrap">
               <div className="text-black text-3xl font-medium  shrink basis-auto">News</div>
@@ -79,7 +71,7 @@ const Edit = () => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
                 placeholder="Title"
                 required
-              />
+              ></input>
             </div>
 
             <div className="mt-5">
@@ -105,6 +97,7 @@ const Edit = () => {
             {/* upload foto */}
             <div className="flex flex-col w-4/5 mt-5">
               <span className="relative mb-2 text-md font-semibold text-gray-900 dark:text-white">Header Image</span>
+
               <CloudinaryUploadWidget uwConfig={uwConfig} setPublicId={setPublicId} setFileUrl={setFileUrl} fileUrl={fileUrl} />
             </div>
           </div>
@@ -114,4 +107,4 @@ const Edit = () => {
   );
 };
 
-export default Edit;
+export default Add;
