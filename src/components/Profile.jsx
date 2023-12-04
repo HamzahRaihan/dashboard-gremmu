@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const Profile = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+  const { userData, handleLogout } = useContext(AuthContext);
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -20,19 +21,16 @@ const Profile = () => {
           <div className="z-50 right-10 absolute mt-2 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600">
             <div className="px-4 py-3" role="none">
               <p className="text-sm text-gray-900 dark:text-white" role="none">
-                Jese Leos
-              </p>
-              <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                jeseleos@gmail.com
+                {userData.firstName} {userData.lastName}
               </p>
             </div>
             <ul className="py-1" role="none">
               <Link to="/setting" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
                 Settings
               </Link>
-              <Link to="/logout" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+              <button className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem" onClick={handleLogout}>
                 Logout
-              </Link>
+              </button>
             </ul>
           </div>
         )}

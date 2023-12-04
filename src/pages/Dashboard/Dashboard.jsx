@@ -1,31 +1,24 @@
-import { Link } from "react-router-dom";
-import { FaUserGroup, FaNewspaper, FaVideo, FaSignsPost, FaSistrix } from "react-icons/fa6";
-import { Checkbox, Table } from "flowbite-react";
+import { Link } from 'react-router-dom';
+import { FaUserGroup, FaNewspaper, FaVideo, FaSignsPost, FaSistrix } from 'react-icons/fa6';
+import { Checkbox, Table } from 'flowbite-react';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 const Dashboard = () => {
-  const [userCount, setUserCount] = useState(0);
+  const [usersData, setUsersData] = useState([]);
+  console.log('🚀 ~ file: Dashboard.jsx:9 ~ Dashboard ~ usersData:', usersData);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${import.meta.env.API}${import.meta.env.USER_ENDPOINT}`);
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/users`);
 
-        if (!response.ok) {
-          throw new Error(`Failed to fetch user data. Status: ${response.status}`);
+        if (response.ok) {
+          const responseData = await response.json();
+          setUsersData(responseData.data);
         }
-
-        const contentType = response.headers.get("content-type");
-
-        if (!contentType || !contentType.includes("application/json")) {
-          throw new Error("Invalid response format. Expected JSON.");
-        }
-
-        const userData = await response.json();
-        setUserCount(userData.length);
       } catch (error) {
-        console.error("Error fetching user data:", error.message);
+        console.error('Error fetching user data:', error.message);
       }
     };
 
@@ -49,7 +42,7 @@ const Dashboard = () => {
                 </div>
                 <div className="justify-center items-stretch flex grow basis-[0%] flex-col">
                   <div className="text-black text-opacity-50 text-sm font-medium leading-5 tracking-normal">Users</div>
-                  <div className="text-black text-2xl font-medium leading-5 tracking-normal mt-2">{userCount}</div>
+                  <div className="text-black text-2xl font-medium leading-5 tracking-normal mt-2">{usersData.length}</div>
                 </div>
               </div>
             </div>

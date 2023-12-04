@@ -1,41 +1,17 @@
-import { useReducer } from "react";
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-const initialState = {
-  clicked: false,
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "CLICK":
-      return {
-        ...state,
-        clicked: true,
-      };
-    default:
-      throw new Error();
-  }
-};
-
-const ButtonPrimary = ({ onClick, children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  const handleClick = () => {
-    dispatch({ type: "CLICK" });
-    onClick();
-  };
-
+const ButtonPrimary = ({ handleButtonClick, children }) => {
   const buttonStyle = `bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer`;
 
   return (
-    <button className={buttonStyle} onClick={handleClick} disabled={state.clicked}>
+    <button className={buttonStyle} onClick={handleButtonClick}>
       {children}
     </button>
   );
 };
 
 ButtonPrimary.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  handleButtonClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
 
