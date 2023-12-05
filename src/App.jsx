@@ -1,7 +1,7 @@
 // App.jsx
 import { Routes, Route, Navigate } from 'react-router-dom';
 import SideBar from './components/SideBar';
-import AuthLogin from './pages/Auth/AuthLogin';
+import AuthLogin from './pages/auth/AuthLogin';
 import Dashboard from './pages/Dashboard/Dashboard';
 import User from './pages/Users/Users';
 import Video from './pages/Video/Video';
