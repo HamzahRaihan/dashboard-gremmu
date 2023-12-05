@@ -11,7 +11,7 @@ import { AuthContext } from './context/AuthContext';
 import { useContext } from 'react';
 import NotAdmin from './pages/NotAdmin';
 import NotFound from './pages/NotFound';
-import Add from './pages/News/add';
+import Add from './pages/News/Add';
 import { NewsContextProvider } from './context/NewsContext';
 
 function App() {
