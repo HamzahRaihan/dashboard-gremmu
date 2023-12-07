@@ -8,7 +8,6 @@ import { formatDate } from '../../utils/Utils';
 
 const News = () => {
   const { newsData } = useContext(NewsContext);
-  console.log('🚀 ~ file: News.jsx:11 ~ News ~ newsData:', newsData);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(new Array(newsData.length).fill(false));
 
