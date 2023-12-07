@@ -1,8 +1,8 @@
-import { useState } from "react";
-import Profile from "./Profile";
-import ButtonNavigasi from "../layout/ButtonNavigasi";
-import { FaAlignLeft } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import Profile from './Profile';
+import ButtonNavigasi from '../layout/ButtonNavigasi';
+import { FaAlignLeft } from 'react-icons/fa6';
+import { Link } from 'react-router-dom';
 
 const SideBar = () => {
   const [isListVisible, setIsListVisible] = useState(false);
@@ -38,7 +38,7 @@ const SideBar = () => {
 
       <aside
         id="logo-sidebar"
-        className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform ${isListVisible ? "translate-x-0" : "-translate-x-full"} bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700`}
+        className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform ${isListVisible ? 'translate-x-0' : '-translate-x-full'} bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700`}
         aria-label="Sidebar"
       >
         <div className="h-full px-6 pb-4 mt-8 overflow-y-auto bg-white dark:bg-gray-800">
@@ -48,14 +48,14 @@ const SideBar = () => {
           <Link to="/user">
             <ButtonNavigasi icon="user" text="User" />
           </Link>
-          <Link to="/video">
-            <ButtonNavigasi icon="video" text="Video" />
+          <Link to="/petitions">
+            <ButtonNavigasi icon="news" text="Petitions" />
           </Link>
           <Link to="/news">
             <ButtonNavigasi icon="news" text="News" />
           </Link>
         </div>
-      </aside>      
+      </aside>
     </>
   );
 };
