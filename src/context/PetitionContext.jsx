@@ -44,8 +44,8 @@ const PetitionContextProvider = ({ children }) => {
       });
       if (response.ok) {
         const responseJson = await response.json();
-        navigate('/petitions');
         dispatch({ type: 'ADD_PETITION', newPetition: responseJson.data });
+        navigate('/petitions');
       }
     } catch (error) {
       console.error(error);
