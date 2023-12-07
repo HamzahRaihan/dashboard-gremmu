@@ -23,14 +23,12 @@ export const NewsContextProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const { id } = useParams();
-  console.log('🚀 ~ file: NewsContext.jsx:25 ~ NewsContextProvider ~ id:', id);
 
   const getAllNews = async () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_BASE_URL}/news`);
       const data = await response.json();
       if (response.ok) {
-        console.log('Data fetched', data);
         setNewsData(data.data);
       } else {
         console.error('error');
