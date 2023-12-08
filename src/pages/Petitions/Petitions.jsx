@@ -4,11 +4,13 @@ import { Card, Spinner } from 'flowbite-react';
 import { useState } from 'react';
 import { IoIosAddCircle } from 'react-icons/io';
 import { formatDate } from '../../utils/Utils';
-import { usePetition } from '../../context/PetitionContext';
+import { usePetition, usePetitionDispatch } from '../../context/PetitionContext';
 
 const Petitions = () => {
-  const { petitions, loading } = usePetition();
+  const { petitions, loading, deletePetition } = usePetition();
   console.log('🚀 ~ file: Petitions.jsx:11 ~ Petitions ~ petitions:', petitions);
+
+  const dispatch = usePetitionDispatch();
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(new Array(petitions.length).fill(false));
 
@@ -72,21 +74,32 @@ const Petitions = () => {
                   >
                     <div className="relative">
                       <div className="flex justify-between text-sm font-bold text-gray-900 dark:text-white">
-                        <span>{formatDate(item.createdAt)}</span>
+                        <span>{formatDate(item.updatedAt)}</span>
                         <button type="button" label="edit" className="text-sm rounded-full dark:focus:ring-gray-600" aria-expanded={isDropdownOpen[index]} onClick={() => toggleDropdown(index)}>
                           <FaEllipsis />
                         </button>
                         {isDropdownOpen[index] && (
                           <div className="absolute right-0 mt-5 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600">
                             <ul className="py-1" role="none">
-                              <Link to={`/news/edit/${item.id}`} className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                              <Link
+                                to={`/petitions/edit-petition/${item.id}`}
+                                className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                                role="menuitem"
+                              >
                                 <FaPenToSquare />
                                 <span>Edit</span>
                               </Link>
-                              <Link to="/news/delete" className="flex items-center gap-2 px-4 py-2 text-sm text-red-800 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                              <button
+                                className="flex items-center gap-2 px-4 py-2 text-sm text-red-800 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                                role="menuitem"
+                                onClick={() => {
+                                  deletePetition(item.id);
+                                  dispatch({ type: 'DELETE_PETITION', id: item.id });
+                                }}
+                              >
                                 <FaDeleteLeft />
                                 <span>Hapus</span>
-                              </Link>
+                              </button>
                             </ul>
                           </div>
                         )}
