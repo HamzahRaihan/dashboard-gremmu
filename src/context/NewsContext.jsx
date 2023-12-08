@@ -26,6 +26,7 @@ export const NewsContextProvider = ({ children }) => {
 
   const getAllNews = async () => {
     try {
+      setLoading(true);
       const response = await fetch(`${import.meta.env.VITE_BASE_URL}/news`);
       const data = await response.json();
       if (response.ok) {
@@ -35,6 +36,8 @@ export const NewsContextProvider = ({ children }) => {
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
