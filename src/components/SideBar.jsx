@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Profile from './Profile';
 import ButtonNavigasi from '../layout/ButtonNavigasi';
 import { FaAlignLeft } from 'react-icons/fa6';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const SideBar = () => {
   const [isListVisible, setIsListVisible] = useState(false);
@@ -42,18 +42,18 @@ const SideBar = () => {
         aria-label="Sidebar"
       >
         <div className="h-full px-6 pb-4 mt-8 overflow-y-auto bg-white dark:bg-gray-800">
-          <Link to="/">
+          <NavLink to="/" className={({ isActive }) => (isActive ? 'bg-black' : 'bg-white')}>
             <ButtonNavigasi property="active" icon="dashboard" text="Dashboard" />
-          </Link>
-          <Link to="/user">
+          </NavLink>
+          <NavLink to="/user">
             <ButtonNavigasi icon="user" text="User" />
-          </Link>
-          <Link to="/petitions">
+          </NavLink>
+          <NavLink to="/petitions">
             <ButtonNavigasi icon="news" text="Petitions" />
-          </Link>
-          <Link to="/news">
+          </NavLink>
+          <NavLink to="/news">
             <ButtonNavigasi icon="news" text="News" />
-          </Link>
+          </NavLink>
         </div>
       </aside>
     </>
