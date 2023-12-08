@@ -15,6 +15,8 @@ import { NewsContextProvider } from './context/NewsContext';
 import Petitions from './pages/Petitions/Petitions';
 import AddPetition from './pages/Petitions/AddPetition';
 import PetitionContextProvider from './context/PetitionContext';
+import { Toaster } from 'react-hot-toast';
+import EditPetition from './pages/Petitions/EditPetition';
 
 function App() {
   const { userData } = useContext(AuthContext);
@@ -54,6 +56,7 @@ function App() {
             <PetitionContextProvider>
               <SideBar />
               <Petitions />
+              <Toaster />
             </PetitionContextProvider>
           ) : (
             <Navigate to="/forbidden" replace={true} />
@@ -68,6 +71,19 @@ function App() {
               <SideBar />
               <AddPetition />
             </>
+          ) : (
+            <Navigate to="/forbidden" replace={true} />
+          )
+        }
+      />
+      <Route
+        path="/petitions/edit-petition/:id"
+        element={
+          userData?.role == 'admin' ? (
+            <PetitionContextProvider>
+              <SideBar />
+              <EditPetition />
+            </PetitionContextProvider>
           ) : (
             <Navigate to="/forbidden" replace={true} />
           )
