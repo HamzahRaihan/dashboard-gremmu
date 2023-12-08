@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { FaSistrix, FaEllipsis, FaDeleteLeft, FaPenToSquare } from 'react-icons/fa6';
-import { Card } from 'flowbite-react';
+import { Card, Spinner } from 'flowbite-react';
 import { useContext, useState } from 'react';
 import { NewsContext } from '../../context/NewsContext';
 import { IoIosAddCircle } from 'react-icons/io';
 import { formatDate } from '../../utils/Utils';
 
 const News = () => {
-  const { newsData } = useContext(NewsContext);
+  const { newsData, loading } = useContext(NewsContext);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(new Array(newsData.length).fill(false));
 
@@ -58,42 +58,46 @@ const News = () => {
             </div>
             {/* card */}
             <div className="flex flex-wrap-reverse justify-start gap-4 p-5">
-              {newsData.map((item, index) => (
-                <Card
-                  className="max-w-[350px] object-cover"
-                  renderImage={() => (
-                    <img src={`${item.image ? item.image : 'https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/photo%20Fill.png?updatedAt=1701236602366'}`} alt="image 1" className="h-52 w-96 object-cover " />
-                  )}
-                  key={item.id}
-                >
-                  <div className="relative">
-                    <div className="flex justify-between text-sm font-bold text-gray-900 dark:text-white">
-                      <span>{formatDate(item.createdAt)}</span>
-                      <button type="button" label="edit" className="text-sm rounded-full dark:focus:ring-gray-600" aria-expanded={isDropdownOpen[index]} onClick={() => toggleDropdown(index)}>
-                        <FaEllipsis />
-                      </button>
-                      {isDropdownOpen[index] && (
-                        <div className="absolute right-0 mt-5 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600">
-                          <ul className="py-1" role="none">
-                            <Link to={`/news/edit/${item.id}`} className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                              <FaPenToSquare />
-                              <span>Edit</span>
-                            </Link>
-                            <Link to="/news/delete" className="flex items-center gap-2 px-4 py-2 text-sm text-red-800 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                              <FaDeleteLeft />
-                              <span>Hapus</span>
-                            </Link>
-                          </ul>
-                        </div>
-                      )}
+              {loading ? (
+                <Spinner />
+              ) : (
+                newsData.map((item, index) => (
+                  <Card
+                    className="max-w-[350px] object-cover"
+                    renderImage={() => (
+                      <img src={`${item.image ? item.image : 'https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/photo%20Fill.png?updatedAt=1701236602366'}`} alt="image 1" className="h-52 w-96 object-cover " />
+                    )}
+                    key={item.id}
+                  >
+                    <div className="relative">
+                      <div className="flex justify-between text-sm font-bold text-gray-900 dark:text-white">
+                        <span>{formatDate(item.createdAt)}</span>
+                        <button type="button" label="edit" className="text-sm rounded-full dark:focus:ring-gray-600" aria-expanded={isDropdownOpen[index]} onClick={() => toggleDropdown(index)}>
+                          <FaEllipsis />
+                        </button>
+                        {isDropdownOpen[index] && (
+                          <div className="absolute right-0 mt-5 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600">
+                            <ul className="py-1" role="none">
+                              <Link to={`/news/edit/${item.id}`} className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                                <FaPenToSquare />
+                                <span>Edit</span>
+                              </Link>
+                              <Link to="/news/delete" className="flex items-center gap-2 px-4 py-2 text-sm text-red-800 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                                <FaDeleteLeft />
+                                <span>Hapus</span>
+                              </Link>
+                            </ul>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                  <p className="font-semibold text-gray-700 dark:text-gray-400">{item.title}</p>
-                  <p className="font-thin text-sm text-gray-700 dark:text-gray-400">
-                    Author: {item.User.firstName} {item.User.lastName}
-                  </p>
-                </Card>
-              ))}
+                    <p className="font-semibold text-gray-700 dark:text-gray-400">{item.title}</p>
+                    <p className="font-thin text-sm text-gray-700 dark:text-gray-400">
+                      Author: {item.User.firstName} {item.User.lastName}
+                    </p>
+                  </Card>
+                ))
+              )}
             </div>
 
             {/* pagination */}
