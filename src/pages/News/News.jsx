@@ -7,7 +7,7 @@ import { IoIosAddCircle } from 'react-icons/io';
 import { formatDate } from '../../utils/Utils';
 
 const News = () => {
-  const { newsData, loading } = useContext(NewsContext);
+  const { newsData, loading, handleDeleteNews } = useContext(NewsContext);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(new Array(newsData.length).fill(false));
 
@@ -82,10 +82,15 @@ const News = () => {
                                 <FaPenToSquare />
                                 <span>Edit</span>
                               </Link>
-                              <Link to="/news/delete" className="flex items-center gap-2 px-4 py-2 text-sm text-red-800 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                              <button
+                                to="/news/delete"
+                                className="flex items-center gap-2 px-4 py-2 text-sm text-red-800 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                                role="menuitem"
+                                onClick={() => handleDeleteNews(item.id)}
+                              >
                                 <FaDeleteLeft />
                                 <span>Hapus</span>
-                              </Link>
+                              </button>
                             </ul>
                           </div>
                         )}
