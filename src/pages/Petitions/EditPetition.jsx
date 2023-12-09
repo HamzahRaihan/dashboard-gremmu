@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import CloudinaryUploadWidget from '../../components/CloudinaryUploadWidget';
 import { Spinner } from 'flowbite-react';
-import { usePetition, usePetitionDispatch } from '../../context/PetitionContext';
 import { useParams } from 'react-router-dom';
-import { formatDate } from '../../utils/Utils';
+import { usePetition, usePetitionDispatch } from '../../hooks/useContext';
 
 const EditPetition = () => {
   const [title, setTitle] = useState('');

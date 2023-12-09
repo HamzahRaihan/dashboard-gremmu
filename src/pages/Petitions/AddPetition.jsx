@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import CloudinaryUploadWidget from '../../components/CloudinaryUploadWidget';
 import { Spinner } from 'flowbite-react';
-import { usePetition, usePetitionDispatch } from '../../context/PetitionContext';
+import { usePetition, usePetitionDispatch } from '../../hooks/useContext';
 
 const AddPetition = () => {
   const [title, setTitle] = useState('');

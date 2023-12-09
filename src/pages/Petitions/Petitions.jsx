@@ -4,7 +4,7 @@ import { Card, Spinner } from 'flowbite-react';
 import { useState } from 'react';
 import { IoIosAddCircle } from 'react-icons/io';
 import { formatDate } from '../../utils/Utils';
-import { usePetition, usePetitionDispatch } from '../../context/PetitionContext';
+import { usePetition, usePetitionDispatch } from '../../hooks/useContext';
 
 const Petitions = () => {
   const { petitions, loading, deletePetition } = usePetition();
