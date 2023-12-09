@@ -96,6 +96,7 @@ function App() {
             <NewsContextProvider>
               <SideBar />
               <News />
+              <Toaster />
             </NewsContextProvider>
           ) : (
             <Navigate to="/forbidden" replace={true} />
