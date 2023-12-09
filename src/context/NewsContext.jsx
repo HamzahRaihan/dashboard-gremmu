@@ -1,11 +1,13 @@
 import { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate, useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 export const NewsContext = createContext({
   newsData: [],
   handleAddNews: async () => {},
   handleEditNews: async () => {},
+  handleDeleteNews: async () => {},
   categories: [],
   loading: false,
   newsById: [],
@@ -23,20 +25,21 @@ export const NewsContextProvider = ({ children }) => {
   const navigate = useNavigate();
 
   const { id } = useParams();
-  console.log('🚀 ~ file: NewsContext.jsx:25 ~ NewsContextProvider ~ id:', id);
 
   const getAllNews = async () => {
     try {
+      setLoading(true);
       const response = await fetch(`${import.meta.env.VITE_BASE_URL}/news`);
       const data = await response.json();
       if (response.ok) {
-        console.log('Data fetched', data);
         setNewsData(data.data);
       } else {
         console.error('error');
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -76,9 +79,13 @@ export const NewsContextProvider = ({ children }) => {
     setLoading(true);
     const getNewsByID = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/news/${id}`);
-        const responseJson = await response.json();
-        setNewsById(responseJson.data);
+        if (id) {
+          const response = await fetch(`${import.meta.env.VITE_BASE_URL}/news/${id}`);
+          const responseJson = await response.json();
+          setNewsById(responseJson.data);
+        } else {
+          console.error('no id');
+        }
       } catch (error) {
         console.error(error.message);
       } finally {
@@ -134,7 +141,25 @@ export const NewsContextProvider = ({ children }) => {
     getCategories();
   }, []);
 
-  return <NewsContext.Provider value={{ newsData, handleAddNews, categories, loading, newsById, handleEditNews }}>{children}</NewsContext.Provider>;
+  const handleDeleteNews = async (id) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/news/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        toast.success('Successfully deleted');
+        await getAllNews();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return <NewsContext.Provider value={{ newsData, handleAddNews, categories, loading, newsById, handleEditNews, handleDeleteNews }}>{children}</NewsContext.Provider>;
 };
 
 NewsContextProvider.propTypes = {

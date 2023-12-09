@@ -4,7 +4,6 @@ import SideBar from './components/SideBar';
 import AuthLogin from './pages/auth/AuthLogin';
 import Dashboard from './pages/Dashboard/Dashboard';
 import User from './pages/Users/Users';
-import Video from './pages/Video/Video';
 import News from './pages/News/News';
 import Edit from './pages/News/edit';
 import { AuthContext } from './context/AuthContext';
@@ -13,6 +12,11 @@ import NotAdmin from './pages/NotAdmin';
 import NotFound from './pages/NotFound';
 import Add from './pages/News/Add';
 import { NewsContextProvider } from './context/NewsContext';
+import Petitions from './pages/Petitions/Petitions';
+import AddPetition from './pages/Petitions/AddPetition';
+import PetitionContextProvider from './context/PetitionContext';
+import { Toaster } from 'react-hot-toast';
+import EditPetition from './pages/Petitions/EditPetition';
 
 function App() {
   const { userData } = useContext(AuthContext);
@@ -46,13 +50,40 @@ function App() {
         }
       />
       <Route
-        path="/video"
+        path="/petitions"
+        element={
+          userData?.role == 'admin' ? (
+            <PetitionContextProvider>
+              <SideBar />
+              <Petitions />
+              <Toaster />
+            </PetitionContextProvider>
+          ) : (
+            <Navigate to="/forbidden" replace={true} />
+          )
+        }
+      />
+      <Route
+        path="/petitions/add-petition"
         element={
           userData?.role == 'admin' ? (
             <>
               <SideBar />
-              <Video />
+              <AddPetition />
             </>
+          ) : (
+            <Navigate to="/forbidden" replace={true} />
+          )
+        }
+      />
+      <Route
+        path="/petitions/edit-petition/:id"
+        element={
+          userData?.role == 'admin' ? (
+            <PetitionContextProvider>
+              <SideBar />
+              <EditPetition />
+            </PetitionContextProvider>
           ) : (
             <Navigate to="/forbidden" replace={true} />
           )
@@ -65,6 +96,7 @@ function App() {
             <NewsContextProvider>
               <SideBar />
               <News />
+              <Toaster />
             </NewsContextProvider>
           ) : (
             <Navigate to="/forbidden" replace={true} />

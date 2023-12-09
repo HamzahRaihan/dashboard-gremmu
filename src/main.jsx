@@ -4,12 +4,15 @@ import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthContextProvider } from './context/AuthContext.jsx';
 import { NewsContextProvider } from './context/NewsContext.jsx';
+import PetitionContextProvider from './context/PetitionContext.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <AuthContextProvider>
       <NewsContextProvider>
-        <App />
+        <PetitionContextProvider>
+          <App />
+        </PetitionContextProvider>
       </NewsContextProvider>
     </AuthContextProvider>
   </BrowserRouter>
