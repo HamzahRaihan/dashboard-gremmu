@@ -1,6 +1,7 @@
-import { createContext, useContext, useEffect, useReducer, useState } from 'react';
+import { createContext, useEffect, useReducer, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export const PetitionContext = createContext(null);
 
@@ -9,13 +10,10 @@ export const PetitionDispatchContext = createContext(null);
 const PetitionContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [petitionByID, setPetitionByID] = useState([]);
-  console.log('🚀 ~ file: PetitionContext.jsx:12 ~ PetitionContextProvider ~ petitionByID:', petitionByID);
   const [petitions, dispatch] = useReducer(PetitionReducer, []);
   const navigate = useNavigate();
-  console.log('🚀 ~ file: PetitionContext.jsx:10 ~ PetitionContextProvider ~ petitions:', petitions);
 
   const { id } = useParams();
-  console.log('🚀 ~ file: PetitionContext.jsx:17 ~ PetitionContextProvider ~ id:', id);
 
   const userData = JSON.parse(localStorage.getItem('ACCOUNT_DATA'));
 
@@ -41,10 +39,14 @@ const PetitionContextProvider = ({ children }) => {
     setLoading(true);
     const getPetitionsByID = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/petitions/${id ? id : 1}`);
-        if (response.ok) {
-          const responseJson = await response.json();
-          setPetitionByID(responseJson.data);
+        if (id) {
+          const response = await fetch(`${import.meta.env.VITE_BASE_URL}/petitions/${id ? id : 1}`);
+          if (response.ok) {
+            const responseJson = await response.json();
+            setPetitionByID(responseJson.data);
+          }
+        } else {
+          console.error('no id');
         }
       } catch (error) {
         console.error(error);
@@ -128,14 +130,6 @@ export default PetitionContextProvider;
 
 const token = localStorage.getItem('ACCOUNT_TOKEN');
 
-export const usePetitionDispatch = () => {
-  return useContext(PetitionDispatchContext);
-};
-
-export const usePetition = () => {
-  return useContext(PetitionContext);
-};
-
 const PetitionReducer = (petitions, action) => {
   switch (action.type) {
     case 'SET_PETITION':
@@ -155,4 +149,8 @@ const PetitionReducer = (petitions, action) => {
     default:
       return petitions;
   }
+};
+
+PetitionContextProvider.propTypes = {
+  children: PropTypes.node,
 };
