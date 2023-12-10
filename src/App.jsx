@@ -17,6 +17,7 @@ import AddPetition from './pages/Petitions/AddPetition';
 import PetitionContextProvider from './context/PetitionContext';
 import { Toaster } from 'react-hot-toast';
 import EditPetition from './pages/Petitions/EditPetition';
+import UserContextProvider from './context/UserContext';
 
 function App() {
   const { userData } = useContext(AuthContext);
@@ -40,10 +41,10 @@ function App() {
         path="/user"
         element={
           userData?.role == 'admin' ? (
-            <>
+            <UserContextProvider>
               <SideBar />
               <User />
-            </>
+            </UserContextProvider>
           ) : (
             <Navigate to="/forbidden" replace={true} />
           )
