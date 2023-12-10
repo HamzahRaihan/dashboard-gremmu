@@ -5,13 +5,16 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthContextProvider } from './context/AuthContext.jsx';
 import { NewsContextProvider } from './context/NewsContext.jsx';
 import PetitionContextProvider from './context/PetitionContext.jsx';
+import UserContextProvider, { UserContext } from './context/UserContext.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <AuthContextProvider>
       <NewsContextProvider>
         <PetitionContextProvider>
-          <App />
+          <UserContextProvider>
+            <App />
+          </UserContextProvider>
         </PetitionContextProvider>
       </NewsContextProvider>
     </AuthContextProvider>
