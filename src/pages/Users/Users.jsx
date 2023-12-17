@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 
 const Users = () => {
   const [userData, setUserData] = useState([]);
+  const [postData, setPostData] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -19,6 +20,18 @@ const Users = () => {
         }
       } catch (error) {
         console.error("Error fetching user data:", error.message);
+      }
+
+      try {
+        const responsePost = await fetch(`${import.meta.env.VITE_BASE_URL}/posts`);
+        if (responsePost.ok) {
+          const responseData = await responsePost.json();
+          setPostData(responseData.data);
+        } else {
+          console.error("Failed to fetch post data");
+        }
+      } catch (error) {
+        console.error("Error fetching post data:", error.message);
       }
     };
 
@@ -79,7 +92,7 @@ const Users = () => {
                         <img src={user.image} className="w-8 h-8 rounded-full" alt="" />
                         <h1>{`${user.firstName} ${user.lastName}`}</h1>
                       </Table.Cell>
-                      <Table.Cell>{user.Posts ? user.Posts.map((post) => post.id).length : 0}</Table.Cell>
+                      <Table.Cell>{postData ? postData.filter((post) => post.userId === user.id).length : 0}</Table.Cell>
                       <Table.Cell>{user.Likes ? user.Likes.map((like) => like.id).length : 0}</Table.Cell>
                       <Table.Cell>{user.Comments ? user.Comments.map((comment) => comment.id).length : 0}</Table.Cell>
                       <Table.Cell>{user.updatedAt}</Table.Cell>
