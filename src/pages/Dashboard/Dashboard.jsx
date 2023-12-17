@@ -8,9 +8,11 @@ const Dashboard = () => {
   const [usersData, setUsersData] = useState([]);
   const [newsData, setNewsData] = useState([]);
   const [petisiData, setPetisiData] = useState([]);
+  const [postData, setPostData] = useState([]);
   console.log("🚀 ~ file: Dashboard.jsx:9 ~ Dashboard ~ usersData:", usersData);
   console.log("🚀 ~ file: Dashboard.jsx:9 ~ Dashboard ~ newsData:", newsData);
   console.log("🚀 ~ file: Dashboard.jsx:9 ~ Dashboard ~ petisiData:", petisiData);
+  console.log("🚀 ~ file: Dashboard.jsx:9 ~ Dashboard ~ postData:", postData);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,6 +37,13 @@ const Dashboard = () => {
         if (petisiResponse.ok) {
           const responseData = await petisiResponse.json();
           setPetisiData(responseData.data);
+        }
+
+        // fetch post data
+        const postResponse = await fetch(`${import.meta.env.VITE_BASE_URL}/post`);
+        if (postResponse.ok) {
+          const responseData = await postResponse.json();
+          setPostData(responseData.data);
         }
       } catch (error) {
         console.error("Error fetching user data:", error.message);
@@ -94,7 +103,7 @@ const Dashboard = () => {
                 </div>
                 <div className="justify-center items-stretch flex grow basis-[0%] flex-col">
                   <div className="text-black text-opacity-50 text-sm font-medium leading-5 tracking-normal">Post</div>
-                  <div className="text-black text-2xl font-medium leading-5 tracking-normal mt-2">50</div>
+                  <div className="text-black text-2xl font-medium leading-5 tracking-normal mt-2">{postData.length}</div>
                 </div>
               </div>
             </div>
@@ -145,7 +154,7 @@ const Dashboard = () => {
                     </Table.Cell>
                     <Table.Cell className="flex items-center gap-6 whitespace-nowrap font-medium text-green-900 dark:text-white">
                       <img src="https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/Jese%20Leos.png?updatedAt=1697535830098" className="w-8 h-8 rounded-full" alt="user photo" />
-                      <h1>John Doe</h1>
+                      <h1></h1>
                     </Table.Cell>
                     <Table.Cell>Mari bergandengan tangan dalam menjaga kebersihan bumi ini da...</Table.Cell>
                     <Table.Cell>Spam</Table.Cell>
