@@ -1,24 +1,43 @@
-import { Link } from 'react-router-dom';
-import { FaUserGroup, FaNewspaper, FaVideo, FaSignsPost, FaSistrix } from 'react-icons/fa6';
-import { Checkbox, Table } from 'flowbite-react';
+import { Link } from "react-router-dom";
+import { FaUserGroup, FaNewspaper, FaVideo, FaSignsPost, FaSistrix } from "react-icons/fa6";
+import { Checkbox, Table } from "flowbite-react";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
   const [usersData, setUsersData] = useState([]);
-  console.log('🚀 ~ file: Dashboard.jsx:9 ~ Dashboard ~ usersData:', usersData);
+  const [newsData, setNewsData] = useState([]);
+  const [petisiData, setPetisiData] = useState([]);
+  console.log("🚀 ~ file: Dashboard.jsx:9 ~ Dashboard ~ usersData:", usersData);
+  console.log("🚀 ~ file: Dashboard.jsx:9 ~ Dashboard ~ newsData:", newsData);
+  console.log("🚀 ~ file: Dashboard.jsx:9 ~ Dashboard ~ petisiData:", petisiData);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/users`);
+        // fetch user data
+        const userResponse = await fetch(`${import.meta.env.VITE_BASE_URL}/users`);
 
-        if (response.ok) {
-          const responseData = await response.json();
+        if (userResponse.ok) {
+          const responseData = await userResponse.json();
           setUsersData(responseData.data);
         }
+
+        // fetch news data
+        const newsResponse = await fetch(`${import.meta.env.VITE_BASE_URL}/news`);
+        if (newsResponse.ok) {
+          const responseData = await newsResponse.json();
+          setNewsData(responseData.data);
+        }
+
+        // fetch petisi data
+        const petisiResponse = await fetch(`${import.meta.env.VITE_BASE_URL}/petisi`);
+        if (petisiResponse.ok) {
+          const responseData = await petisiResponse.json();
+          setPetisiData(responseData.data);
+        }
       } catch (error) {
-        console.error('Error fetching user data:', error.message);
+        console.error("Error fetching user data:", error.message);
       }
     };
 
@@ -53,7 +72,7 @@ const Dashboard = () => {
                 </div>
                 <div className="justify-center items-stretch flex grow basis-[0%] flex-col">
                   <div className="text-black text-opacity-50 text-sm font-medium leading-5 tracking-normal">News</div>
-                  <div className="text-black text-2xl font-medium leading-5 tracking-normal mt-2">12</div>
+                  <div className="text-black text-2xl font-medium leading-5 tracking-normal mt-2">{newsData.length}</div>
                 </div>
               </div>
             </div>
@@ -63,8 +82,8 @@ const Dashboard = () => {
                   <FaVideo loading="lazy" className="aspect-square object-contain object-center w-8 overflow-hidden text-green-500" />
                 </div>
                 <div className="justify-center items-stretch flex grow basis-[0%] flex-col">
-                  <div className="text-black text-opacity-50 text-sm font-medium leading-5 tracking-normal">Videos</div>
-                  <div className="text-black text-2xl font-medium leading-5 tracking-normal mt-2">12</div>
+                  <div className="text-black text-opacity-50 text-sm font-medium leading-5 tracking-normal">Petisi</div>
+                  <div className="text-black text-2xl font-medium leading-5 tracking-normal mt-2">{petisiData.length}</div>
                 </div>
               </div>
             </div>
