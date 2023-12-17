@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 const Users = () => {
   const [userData, setUserData] = useState([]);
   const [postData, setPostData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -37,6 +38,10 @@ const Users = () => {
 
     fetchUserData();
   }, []);
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value.toLowerCase());
+  };
   return (
     <div className="p-4 sm:ml-64">
       <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
@@ -57,6 +62,7 @@ const Users = () => {
                       className="block p-2.5 w-full z-20 text-sm text-green-900 bg-green-50 rounded-lg border-2 border-green-300 focus:ring-2 dark:bg-green-700 dark:border-green-600 dark:placeholder-green-400 dark:text-white  focus:ring-green-500 focus:border-green-500 dark:focus:ring-green-500 dark:focus:border-green-500"
                       placeholder="Search"
                       required
+                      onChange={handleSearch}
                     />
                     <button
                       type="submit"
@@ -83,27 +89,36 @@ const Users = () => {
                   <Table.HeadCell>Action</Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
-                  {userData.map((user) => (
-                    <Table.Row key={user.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                      <Table.Cell className="p-4">
-                        <Checkbox />
-                      </Table.Cell>
-                      <Table.Cell className="flex items-center gap-6 whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                        <img src={user.image} className="w-8 h-8 rounded-full" alt="" />
-                        <h1>{`${user.firstName} ${user.lastName}`}</h1>
-                      </Table.Cell>
-                      <Table.Cell>{postData ? postData.filter((post) => post.userId === user.id).length : 0}</Table.Cell>
-                      <Table.Cell>{user.Likes ? user.Likes.map((like) => like.id).length : 0}</Table.Cell>
-                      <Table.Cell>{user.Comments ? user.Comments.map((comment) => comment.id).length : 0}</Table.Cell>
-                      <Table.Cell>{user.updatedAt}</Table.Cell>
-                      <Table.Cell>
-                        <div className="flex items-center gap-2">
-                          <FaSquarePen className="text-lg hover:scale-125 text-green-600 transition-transform duration-300 ease-in-out transform" />
-                          <FaRegTrashCan className="text-lg hover:scale-125 text-red-700 transition-transform duration-300 ease-in-out transform" />
-                        </div>
-                      </Table.Cell>
-                    </Table.Row>
-                  ))}
+                  {userData
+                    .filter((user) => {
+                      // Check if firstName and lastName are not null before applying toLowerCase()
+                      const lowerFirstName = user.firstName ? user.firstName.toLowerCase() : "";
+                      const lowerLastName = user.lastName ? user.lastName.toLowerCase() : "";
+
+                      // Filter based on the lowercase search term
+                      return lowerFirstName.includes(searchTerm) || lowerLastName.includes(searchTerm);
+                    })
+                    .map((user) => (
+                      <Table.Row key={user.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                        <Table.Cell className="p-4">
+                          <Checkbox />
+                        </Table.Cell>
+                        <Table.Cell className="flex items-center gap-6 whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                          <img src={user.image} className="w-8 h-8 rounded-full" alt=""/>
+                          <h1>{`${user.firstName} ${user.lastName}`}</h1>
+                        </Table.Cell>
+                        <Table.Cell>{postData ? postData.filter((post) => post.userId === user.id).length : 0}</Table.Cell>
+                        <Table.Cell>{user.Likes ? user.Likes.length : 0}</Table.Cell>
+                        <Table.Cell>{user.Comments ? user.Comments.length : 0}</Table.Cell>
+                        <Table.Cell>{user.updatedAt}</Table.Cell>
+                        <Table.Cell>
+                          <div className="flex items-center gap-2">
+                            <FaSquarePen className="text-lg hover:scale-125 text-green-600 transition-transform duration-300 ease-in-out transform" />
+                            <FaRegTrashCan className="text-lg hover:scale-125 text-red-700 transition-transform duration-300 ease-in-out transform" />
+                          </div>
+                        </Table.Cell>
+                      </Table.Row>
+                    ))}
                 </Table.Body>
               </Table>
             </div>
