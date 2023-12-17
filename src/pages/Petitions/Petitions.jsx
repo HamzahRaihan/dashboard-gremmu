@@ -1,15 +1,18 @@
 import { Link } from 'react-router-dom';
 import { FaSistrix, FaEllipsis, FaDeleteLeft, FaPenToSquare } from 'react-icons/fa6';
 import { Card, Spinner } from 'flowbite-react';
-import { useContext, useState } from 'react';
-import { NewsContext } from '../../context/NewsContext';
+import { useState } from 'react';
 import { IoIosAddCircle } from 'react-icons/io';
 import { formatDate } from '../../utils/Utils';
+import { usePetition, usePetitionDispatch } from '../../hooks/useContext';
 
-const News = () => {
-  const { newsData, loading, handleDeleteNews } = useContext(NewsContext);
+const Petitions = () => {
+  const { petitions, loading, deletePetition } = usePetition();
+  console.log('🚀 ~ file: Petitions.jsx:11 ~ Petitions ~ petitions:', petitions);
 
-  const [isDropdownOpen, setIsDropdownOpen] = useState(new Array(newsData.length).fill(false));
+  const dispatch = usePetitionDispatch();
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(new Array(petitions.length).fill(false));
 
   const toggleDropdown = (index) => {
     setIsDropdownOpen((prev) => {
@@ -25,8 +28,8 @@ const News = () => {
         <div className="items-stretch self-stretch flex flex-col">
           <div className="items-stretch flex w-full justify-between gap-5 mt-2 px-5 max-md:max-w-full max-md:flex-wrap">
             <div className="flex items-center gap-3">
-              <div className="text-black text-3xl font-medium leading-10 grow shrink basis-auto">News</div>
-              <Link to="/news/add-news">
+              <div className="text-black text-3xl font-medium leading-10 grow shrink basis-auto">Petitions</div>
+              <Link to="/petitions/add-petition">
                 <IoIosAddCircle size={30} />
               </Link>
             </div>
@@ -35,7 +38,7 @@ const News = () => {
           <div className="items-stretch border border-[color:var(--neutral-700,#D1D9E2)] shadow-sm bg-slate-50 flex w-full flex-col mt-8 pb-3 rounded-xl border-solid max-md:max-w-full">
             <div className="items-stretch border-b-[color:var(--neutral-700,#D1D9E2)] bg-slate-50 flex w-full flex-col px-5 py-4 border-b border-solid max-md:max-w-full">
               <div className="items-center flex w-full justify-between gap-5 max-md:max-w-full max-md:flex-wrap">
-                <h1 className="text-black text-base font-medium leading-5 tracking-normal my-auto">News</h1>
+                <h1 className="text-black text-base font-medium leading-5 tracking-normal my-auto">Petitions</h1>
 
                 <div className="items-center bg-white self-stretch flex justify-between gap-5 pl-3">
                   <div className="relative w-full">
@@ -61,7 +64,7 @@ const News = () => {
               {loading ? (
                 <Spinner />
               ) : (
-                newsData.map((item, index) => (
+                petitions.map((item, index) => (
                   <Card
                     className="max-w-[350px] object-cover"
                     renderImage={() => (
@@ -71,22 +74,28 @@ const News = () => {
                   >
                     <div className="relative">
                       <div className="flex justify-between text-sm font-bold text-gray-900 dark:text-white">
-                        <span>{formatDate(item.createdAt)}</span>
+                        <span>{formatDate(item.updatedAt)}</span>
                         <button type="button" label="edit" className="text-sm rounded-full dark:focus:ring-gray-600" aria-expanded={isDropdownOpen[index]} onClick={() => toggleDropdown(index)}>
                           <FaEllipsis />
                         </button>
                         {isDropdownOpen[index] && (
                           <div className="absolute right-0 mt-5 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600">
                             <ul className="py-1" role="none">
-                              <Link to={`/news/edit/${item.id}`} className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                              <Link
+                                to={`/petitions/edit-petition/${item.id}`}
+                                className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                                role="menuitem"
+                              >
                                 <FaPenToSquare />
                                 <span>Edit</span>
                               </Link>
                               <button
-                                to="/news/delete"
                                 className="flex items-center gap-2 px-4 py-2 text-sm text-red-800 hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                 role="menuitem"
-                                onClick={() => handleDeleteNews(item.id)}
+                                onClick={() => {
+                                  deletePetition(item.id);
+                                  dispatch({ type: 'DELETE_PETITION', id: item.id });
+                                }}
                               >
                                 <FaDeleteLeft />
                                 <span>Hapus</span>
@@ -97,9 +106,6 @@ const News = () => {
                       </div>
                     </div>
                     <p className="font-semibold text-gray-700 dark:text-gray-400">{item.title}</p>
-                    <p className="font-thin text-sm text-gray-700 dark:text-gray-400">
-                      Author: {item.User.firstName} {item.User.lastName}
-                    </p>
                   </Card>
                 ))
               )}
@@ -149,4 +155,4 @@ const News = () => {
     </div>
   );
 };
-export default News;
+export default Petitions;
