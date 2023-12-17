@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaUserGroup, FaNewspaper, FaVideo, FaSignsPost, FaSistrix } from "react-icons/fa6";
+import { FaUserGroup, FaNewspaper, FaFileSignature, FaSignsPost, FaSistrix } from "react-icons/fa6";
 import { Checkbox, Table } from "flowbite-react";
 
 import { useEffect, useState } from "react";
@@ -88,7 +88,7 @@ const Dashboard = () => {
             <div className="justify-end border border-[color:var(--neutral-700,#D1D9E2)] shadow-sm bg-slate-50 flex grow basis-[0%] flex-col px-5 py-4 rounded-xl border-solid items-end">
               <div className="items-stretch flex w-[213px] max-w-full justify-between gap-5">
                 <div className="justify-center items-center bg-green-200 flex aspect-[1.0408163265306123] flex-col px-2.5 py-2.5 rounded-[50px]">
-                  <FaVideo loading="lazy" className="aspect-square object-contain object-center w-8 overflow-hidden text-green-500" />
+                  <FaFileSignature loading="lazy" className="aspect-square object-contain object-center w-8 overflow-hidden text-green-500" />
                 </div>
                 <div className="justify-center items-stretch flex grow basis-[0%] flex-col">
                   <div className="text-black text-opacity-50 text-sm font-medium leading-5 tracking-normal">Petisi</div>
