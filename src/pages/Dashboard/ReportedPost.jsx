@@ -68,7 +68,7 @@ const RecentPost = () => {
             </Table.HeadCell>
             <Table.HeadCell>Email</Table.HeadCell>
             <Table.HeadCell>Post</Table.HeadCell>
-            <Table.HeadCell>Reason</Table.HeadCell>
+            <Table.HeadCell>Poin</Table.HeadCell>
             <Table.HeadCell>Date</Table.HeadCell>
             <Table.HeadCell>
               <span className="sr-only">Edit</span>
@@ -82,7 +82,7 @@ const RecentPost = () => {
                 </Table.Cell>
                 <Table.Cell>{post.User.email}</Table.Cell>
                 <Table.Cell>{post.post}</Table.Cell>
-                <Table.Cell>Spam</Table.Cell>
+                <Table.Cell>{post.User.points}</Table.Cell>
                 <Table.Cell>{new Date(post.createdAt).toLocaleString()}</Table.Cell>
                 <Table.Cell>
                   <div className="flex items-center gap-2">
