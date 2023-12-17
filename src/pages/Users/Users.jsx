@@ -1,8 +1,29 @@
 import { Link } from "react-router-dom";
 import { FaSistrix, FaSquarePen, FaRegTrashCan } from "react-icons/fa6";
 import { Checkbox, Table } from "flowbite-react";
+import { useState, useEffect } from "react";
 
 const Users = () => {
+  const [userData, setUserData] = useState([]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/users`);
+
+        if (response.ok) {
+          const responseData = await response.json();
+          setUserData(responseData.data);
+        } else {
+          console.error("Failed to fetch user data");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error.message);
+      }
+    };
+
+    fetchUserData();
+  }, []);
   return (
     <div className="p-4 sm:ml-64">
       <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
@@ -49,25 +70,27 @@ const Users = () => {
                   <Table.HeadCell>Action</Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                    <Table.Cell className="p-4">
-                      <Checkbox />
-                    </Table.Cell>
-                    <Table.Cell className="flex items-center gap-6 whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                      <img src="https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/Jese%20Leos.png?updatedAt=1697535830098" className="w-8 h-8 rounded-full" alt="user photo" />
-                      <h1>John Doe</h1>
-                    </Table.Cell>
-                    <Table.Cell>Seorang peminat kebersihan bumi yang penuh semangat, selalu sia..</Table.Cell>
-                    <Table.Cell>100</Table.Cell>
-                    <Table.Cell>20</Table.Cell>
-                    <Table.Cell>20</Table.Cell>
-                    <Table.Cell>
-                      <div className="flex items-center gap-2">
-                        <FaSquarePen className="text-lg hover:scale-125 text-green-600 transition-transform duration-300 ease-in-out transform" />
-                        <FaRegTrashCan className="text-lg hover:scale-125 text-red-700 transition-transform duration-300 ease-in-out transform" />
-                      </div>
-                    </Table.Cell>
-                  </Table.Row>
+                  {userData.map((user) => (
+                    <Table.Row key={user.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                      <Table.Cell className="p-4">
+                        <Checkbox />
+                      </Table.Cell>
+                      <Table.Cell className="flex items-center gap-6 whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                        <img src={user.image} className="w-8 h-8 rounded-full" alt="" />
+                        <h1>{`${user.firstName} ${user.lastName}`}</h1>
+                      </Table.Cell>
+                      <Table.Cell>{user.Posts ? user.Posts.map((post) => post.id).length : 0}</Table.Cell>
+                      <Table.Cell>{user.Likes ? user.Likes.map((like) => like.id).length : 0}</Table.Cell>
+                      <Table.Cell>{user.Comments ? user.Comments.map((comment) => comment.id).length : 0}</Table.Cell>
+                      <Table.Cell>{user.updatedAt}</Table.Cell>
+                      <Table.Cell>
+                        <div className="flex items-center gap-2">
+                          <FaSquarePen className="text-lg hover:scale-125 text-green-600 transition-transform duration-300 ease-in-out transform" />
+                          <FaRegTrashCan className="text-lg hover:scale-125 text-red-700 transition-transform duration-300 ease-in-out transform" />
+                        </div>
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
                 </Table.Body>
               </Table>
             </div>

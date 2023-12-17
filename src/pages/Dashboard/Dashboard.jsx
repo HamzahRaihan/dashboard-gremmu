@@ -33,14 +33,14 @@ const Dashboard = () => {
         }
 
         // fetch petisi data
-        const petisiResponse = await fetch(`${import.meta.env.VITE_BASE_URL}/petisi`);
+        const petisiResponse = await fetch(`${import.meta.env.VITE_BASE_URL}/petitions`);
         if (petisiResponse.ok) {
           const responseData = await petisiResponse.json();
           setPetisiData(responseData.data);
         }
 
         // fetch post data
-        const postResponse = await fetch(`${import.meta.env.VITE_BASE_URL}/post`);
+        const postResponse = await fetch(`${import.meta.env.VITE_BASE_URL}/posts`);
         if (postResponse.ok) {
           const responseData = await postResponse.json();
           setPostData(responseData.data);
