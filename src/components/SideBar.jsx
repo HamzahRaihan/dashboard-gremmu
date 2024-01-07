@@ -27,7 +27,7 @@ const SideBar = () => {
               <FaAlignLeft />
             </button>
             <span className="flex ms-2 md:me-24">
-              <img src="https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/main-logo-small.png?updatedAt=1697183029244" className="h-8 me-3" alt="Greenworldaware Logo" />
+              <img src="https://ik.imagekit.io/2tuizmyym/LogoGremmu.png?updatedAt=1704544437696" className="h-8 me-3" alt="gremmu Logo" />
             </span>
           </div>
 
