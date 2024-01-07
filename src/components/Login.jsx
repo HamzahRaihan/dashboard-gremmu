@@ -56,10 +56,10 @@ const Login = () => {
   return (
     <div className="flex justify-center items-center">
       <div className="flex flex-col items-center justify-center border bg-slate-50 w-full max-w-[660px] mt-10 mb-10 px-8 py-5 rounded-xl border-solid border-red-100 max-md:my-10 max-md:px-5">
-        <img src="https://ik.imagekit.io/alzirahmana/Asset%20-%20mobile%20responsive%20web/GreenWorldAware-2%201.png?updatedAt=1696991576040" alt="Logo" />
+        <img className="w-20 py-10" src="https://ik.imagekit.io/2tuizmyym/LogoGremmu.png?updatedAt=1704544437696" alt="Logo" />
         <form className="flex flex-col items-center bg-white self-stretch p-7 rounded-xl max-md:max-w-full max-md:px-5 gap-2">
           <div className="relative text-stone-900 text-xs font-bold leading-5 self-stretch my-2 w-full">
-            <label>Email</label>
+            <label htmlFor="email">Email</label>
             <input
               type="text"
               value={email}
