@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Profile from './Profile';
 import ButtonNavigasi from '../layout/ButtonNavigasi';
 import { FaAlignLeft } from 'react-icons/fa6';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const SideBar = () => {
   const [isListVisible, setIsListVisible] = useState(false);
